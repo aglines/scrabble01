@@ -42,8 +42,6 @@ Rack.prototype.generateRack = function (needNumber,initialBag) {
 }
 
 
-
-
 function getRandomInt(min, max) {
 min = Math.ceil(min);
 max = Math.floor(max);

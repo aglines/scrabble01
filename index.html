@@ -1,14 +1,295 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="js/scripts.js" type="text/javascript"></script>
-        <script src="js/bag.json"></script>
-    <title></title>
+
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/scripts.js"></script>
+    <script type="text/javascript" src="js/bag.json"></script>
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> -->
+  	<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="assets/javascript/game.js"></script> -->
+    <title>Scrabble</title>
   </head>
   <body>
+    <div class="container">
+      <h1>Scrabble</h1>
+      <div class="game-board">
+        <div class="row" id="00">
+          <!-- 1st row */ -->
+          <div class="col-xs-1 cell 3W" id="00-00"></div>
+          <div class="col-xs-1 cell" id="00-01"></div>
+          <div class="col-xs-1 cell" id="00-02"></div>
+          <div class="col-xs-1 cell 2L" id="00-03"></div>
+          <div class="col-xs-1 cell" id="00-04"></div>
+          <div class="col-xs-1 cell" id="00-05"></div>
+          <div class="col-xs-1 cell" id="00-06"></div>
+          <div class="col-xs-1 cell 3W" id="00-07"></div>
+          <div class="col-xs-1 cell" id="00-08"></div>
+          <div class="col-xs-1 cell" id="00-09"></div>
+          <div class="col-xs-1 cell" id="00-10"></div>
+          <div class="col-xs-1 cell 2L" id="00-11"></div>
+          <div class="col-xs-1 cell" id="00-12"></div>
+          <div class="col-xs-1 cell" id="00-13"></div>
+          <div class="col-xs-1 cell 3W" id="00-14"></div>
+        </div>
+        <div class="row" id="01">
+          <!-- 2nd row */ -->
+          <div class="col-xs-1 cell" id="01-00"></div>
+          <div class="col-xs-1 cell 2W" id="01-01"></div>
+          <div class="col-xs-1 cell" id="01-02"></div>
+          <div class="col-xs-1 cell" id="01-03"></div>
+          <div class="col-xs-1 cell" id="01-04"></div>
+          <div class="col-xs-1 cell 3L" id="01-05"></div>
+          <div class="col-xs-1 cell" id="01-06"></div>
+          <div class="col-xs-1 cell" id="01-07"></div>
+          <div class="col-xs-1 cell" id="01-08"></div>
+          <div class="col-xs-1 cell 3L" id="01-09"></div>
+          <div class="col-xs-1 cell" id="01-10"></div>
+          <div class="col-xs-1 cell" id="01-11"></div>
+          <div class="col-xs-1 cell" id="01-12"></div>
+          <div class="col-xs-1 cell 2W" id="01-13"></div>
+          <div class="col-xs-1 cell" id="01-14"></div>
+        </div>
+        <div class="row" id="02">
+          <!-- 3rd row */ -->
+          <div class="col-xs-1 cell" id="02-00"></div>
+          <div class="col-xs-1 cell" id="02-01"></div>
+          <div class="col-xs-1 cell 2W" id="02-02"></div>
+          <div class="col-xs-1 cell" id="02-03"></div>
+          <div class="col-xs-1 cell" id="02-04"></div>
+          <div class="col-xs-1 cell" id="02-05"></div>
+          <div class="col-xs-1 cell 2L" id="02-06"></div>
+          <div class="col-xs-1 cell" id="02-07"></div>
+          <div class="col-xs-1 cell 2L" id="02-08"></div>
+          <div class="col-xs-1 cell" id="02-09"></div>
+          <div class="col-xs-1 cell" id="02-10"></div>
+          <div class="col-xs-1 cell" id="02-11"></div>
+          <div class="col-xs-1 cell 2W" id="02-12"></div>
+          <div class="col-xs-1 cell" id="02-13"></div>
+          <div class="col-xs-1 cell" id="02-14"></div>
+        </div>
+        <div class="row" id="03">
+          <!-- 4th row */ -->
+          <div class="col-xs-1 cell 2L" id="03-00"></div>
+          <div class="col-xs-1 cell" id="03-01"></div>
+          <div class="col-xs-1 cell" id="03-02"></div>
+          <div class="col-xs-1 cell 2W" id="03-03"></div>
+          <div class="col-xs-1 cell" id="03-04"></div>
+          <div class="col-xs-1 cell" id="03-05"></div>
+          <div class="col-xs-1 cell" id="03-06"></div>
+          <div class="col-xs-1 cell 2L" id="03-07"></div>
+          <div class="col-xs-1 cell" id="03-08"></div>
+          <div class="col-xs-1 cell" id="03-09"></div>
+          <div class="col-xs-1 cell" id="03-10"></div>
+          <div class="col-xs-1 cell 2W" id="03-11"></div>
+          <div class="col-xs-1 cell" id="03-12"></div>
+          <div class="col-xs-1 cell" id="03-13"></div>
+          <div class="col-xs-1 cell 2L" id="03-14"></div>
+        </div>
+        <div class="row" id="04">
+          <!-- 5th row */ -->
+          <div class="col-xs-1 cell" id="04-00"></div>
+          <div class="col-xs-1 cell" id="04-01"></div>
+          <div class="col-xs-1 cell" id="04-02"></div>
+          <div class="col-xs-1 cell" id="04-03"></div>
+          <div class="col-xs-1 cell 2W" id="04-04"></div>
+          <div class="col-xs-1 cell" id="04-05"></div>
+          <div class="col-xs-1 cell" id="04-06"></div>
+          <div class="col-xs-1 cell" id="04-07"></div>
+          <div class="col-xs-1 cell" id="04-08"></div>
+          <div class="col-xs-1 cell" id="04-09"></div>
+          <div class="col-xs-1 cell 2W" id="04-10"></div>
+          <div class="col-xs-1 cell" id="04-11"></div>
+          <div class="col-xs-1 cell" id="04-12"></div>
+          <div class="col-xs-1 cell" id="04-13"></div>
+          <div class="col-xs-1 cell" id="04-14"></div>
+        </div>
+        <div class="row" id="05">
+          <!-- 6th row */ -->
+          <div class="col-xs-1 cell" id="05-00"></div>
+          <div class="col-xs-1 cell 3L" id="05-01"></div>
+          <div class="col-xs-1 cell" id="05-02"></div>
+          <div class="col-xs-1 cell" id="05-03"></div>
+          <div class="col-xs-1 cell" id="05-04"></div>
+          <div class="col-xs-1 cell 3L" id="05-05"></div>
+          <div class="col-xs-1 cell" id="05-06"></div>
+          <div class="col-xs-1 cell" id="05-07"></div>
+          <div class="col-xs-1 cell" id="05-08"></div>
+          <div class="col-xs-1 cell 3L" id="05-09"></div>
+          <div class="col-xs-1 cell" id="05-10"></div>
+          <div class="col-xs-1 cell" id="05-11"></div>
+          <div class="col-xs-1 cell" id="05-12"></div>
+          <div class="col-xs-1 cell 3L" id="05-13"></div>
+          <div class="col-xs-1 cell" id="05-14"></div>
+        </div>
+        <div class="row" id="06">
+          <!-- 7th row */ -->
+          <div class="col-xs-1 cell" id="06-00"></div>
+          <div class="col-xs-1 cell" id="06-01"></div>
+          <div class="col-xs-1 cell 2L" id="06-02"></div>
+          <div class="col-xs-1 cell" id="06-03"></div>
+          <div class="col-xs-1 cell" id="06-04"></div>
+          <div class="col-xs-1 cell" id="06-05"></div>
+          <div class="col-xs-1 cell 2L" id="06-06"></div>
+          <div class="col-xs-1 cell" id="06-07"></div>
+          <div class="col-xs-1 cell 2L" id="06-08"></div>
+          <div class="col-xs-1 cell" id="06-09"></div>
+          <div class="col-xs-1 cell" id="06-10"></div>
+          <div class="col-xs-1 cell" id="06-11"></div>
+          <div class="col-xs-1 cell 2L" id="06-12"></div>
+          <div class="col-xs-1 cell" id="06-13"></div>
+          <div class="col-xs-1 cell" id="06-14"></div>
+        </div>
+        <div class="row" id="07">
+          <!-- 8th row */ -->
+          <div class="col-xs-1 cell 3W" id="07-00"></div>
+          <div class="col-xs-1 cell" id="07-01"></div>
+          <div class="col-xs-1 cell" id="07-02"></div>
+          <div class="col-xs-1 cell 2L" id="07-03"></div>
+          <div class="col-xs-1 cell" id="07-04"></div>
+          <div class="col-xs-1 cell" id="07-05"></div>
+          <div class="col-xs-1 cell" id="07-06"></div>
+          <div class="col-xs-1 cell 2W" id="07-07"></div>
+          <div class="col-xs-1 cell" id="07-08"></div>
+          <div class="col-xs-1 cell" id="07-09"></div>
+          <div class="col-xs-1 cell" id="07-10"></div>
+          <div class="col-xs-1 cell 2L" id="07-11"></div>
+          <div class="col-xs-1 cell" id="07-12"></div>
+          <div class="col-xs-1 cell" id="07-13"></div>
+          <div class="col-xs-1 cell 3W" id="07-14"></div>
+        </div>
+        <div class="row" id="08">
+          <!-- 9th row */ -->
+          <div class="col-xs-1 cell" id="08-00"></div>
+          <div class="col-xs-1 cell" id="08-01"></div>
+          <div class="col-xs-1 cell 2L" id="08-02"></div>
+          <div class="col-xs-1 cell" id="08-03"></div>
+          <div class="col-xs-1 cell" id="08-04"></div>
+          <div class="col-xs-1 cell" id="08-05"></div>
+          <div class="col-xs-1 cell 2L" id="08-06"></div>
+          <div class="col-xs-1 cell" id="08-07"></div>
+          <div class="col-xs-1 cell 2L" id="08-08"></div>
+          <div class="col-xs-1 cell" id="08-09"></div>
+          <div class="col-xs-1 cell" id="08-10"></div>
+          <div class="col-xs-1 cell" id="08-11"></div>
+          <div class="col-xs-1 cell 2L" id="08-12"></div>
+          <div class="col-xs-1 cell" id="08-13"></div>
+          <div class="col-xs-1 cell" id="08-14"></div>
+        </div>
+        <div class="row" id="09">
+          <!-- 10th row */ -->
+          <div class="col-xs-1 cell" id="09-00"></div>
+          <div class="col-xs-1 cell 3L" id="09-01"></div>
+          <div class="col-xs-1 cell" id="09-02"></div>
+          <div class="col-xs-1 cell" id="09-03"></div>
+          <div class="col-xs-1 cell" id="09-04"></div>
+          <div class="col-xs-1 cell 3L" id="09-05"></div>
+          <div class="col-xs-1 cell" id="09-06"></div>
+          <div class="col-xs-1 cell" id="09-07"></div>
+          <div class="col-xs-1 cell" id="09-08"></div>
+          <div class="col-xs-1 cell 3L" id="09-09"></div>
+          <div class="col-xs-1 cell" id="09-10"></div>
+          <div class="col-xs-1 cell" id="09-11"></div>
+          <div class="col-xs-1 cell" id="09-12"></div>
+          <div class="col-xs-1 cell 3L" id="09-13"></div>
+          <div class="col-xs-1 cell" id="09-14"></div>
+        </div>
+        <div class="row" id="10">
+          <!-- 11th row */ -->
+          <div class="col-xs-1 cell" id="10-00"></div>
+          <div class="col-xs-1 cell" id="10-01"></div>
+          <div class="col-xs-1 cell" id="10-02"></div>
+          <div class="col-xs-1 cell" id="10-03"></div>
+          <div class="col-xs-1 cell 2W" id="10-04"></div>
+          <div class="col-xs-1 cell" id="10-05"></div>
+          <div class="col-xs-1 cell" id="10-06"></div>
+          <div class="col-xs-1 cell" id="10-07"></div>
+          <div class="col-xs-1 cell" id="10-08"></div>
+          <div class="col-xs-1 cell" id="10-09"></div>
+          <div class="col-xs-1 cell 2W" id="10-10"></div>
+          <div class="col-xs-1 cell" id="10-11"></div>
+          <div class="col-xs-1 cell" id="10-12"></div>
+          <div class="col-xs-1 cell" id="10-13"></div>
+          <div class="col-xs-1 cell" id="10-14"></div>
+        </div>
+        <div class="row" id="11">
+          <!-- 12th row */ -->
+          <div class="col-xs-1 cell 2L" id="11-00"></div>
+          <div class="col-xs-1 cell" id="11-01"></div>
+          <div class="col-xs-1 cell" id="11-02"></div>
+          <div class="col-xs-1 cell 2W" id="11-03"></div>
+          <div class="col-xs-1 cell" id="11-04"></div>
+          <div class="col-xs-1 cell" id="11-05"></div>
+          <div class="col-xs-1 cell" id="11-06"></div>
+          <div class="col-xs-1 cell 2L" id="11-07"></div>
+          <div class="col-xs-1 cell" id="11-08"></div>
+          <div class="col-xs-1 cell" id="11-09"></div>
+          <div class="col-xs-1 cell" id="11-10"></div>
+          <div class="col-xs-1 cell 2W" id="11-11"></div>
+          <div class="col-xs-1 cell" id="11-12"></div>
+          <div class="col-xs-1 cell" id="11-13"></div>
+          <div class="col-xs-1 cell 2L" id="11-14"></div>
+        </div>
+        <div class="row" id="12">
+          <!-- 13th row */ -->
+          <div class="col-xs-1 cell" id="12-00"></div>
+          <div class="col-xs-1 cell" id="12-01"></div>
+          <div class="col-xs-1 cell 2W" id="12-02"></div>
+          <div class="col-xs-1 cell" id="12-03"></div>
+          <div class="col-xs-1 cell" id="12-04"></div>
+          <div class="col-xs-1 cell" id="12-05"></div>
+          <div class="col-xs-1 cell" id="12-06"></div>
+          <div class="col-xs-1 cell" id="12-07"></div>
+          <div class="col-xs-1 cell" id="12-08"></div>
+          <div class="col-xs-1 cell" id="12-09"></div>
+          <div class="col-xs-1 cell" id="12-10"></div>
+          <div class="col-xs-1 cell" id="12-11"></div>
+          <div class="col-xs-1 cell 2W" id="12-12"></div>
+          <div class="col-xs-1 cell" id="12-13"></div>
+          <div class="col-xs-1 cell" id="12-14"></div>
+        </div>
+        <div class="row" id="13">
+          <!-- 14th row */ -->
+          <div class="col-xs-1 cell" id="13-00"></div>
+          <div class="col-xs-1 cell 2W" id="13-01"></div>
+          <div class="col-xs-1 cell" id="13-02"></div>
+          <div class="col-xs-1 cell" id="13-03"></div>
+          <div class="col-xs-1 cell" id="13-04"></div>
+          <div class="col-xs-1 cell 3L" id="13-05"></div>
+          <div class="col-xs-1 cell" id="13-06"></div>
+          <div class="col-xs-1 cell" id="13-07"></div>
+          <div class="col-xs-1 cell" id="13-08"></div>
+          <div class="col-xs-1 cell 3L" id="13-09"></div>
+          <div class="col-xs-1 cell" id="13-10"></div>
+          <div class="col-xs-1 cell" id="13-11"></div>
+          <div class="col-xs-1 cell" id="13-12"></div>
+          <div class="col-xs-1 cell 2W" id="13-13"></div>
+          <div class="col-xs-1 cell" id="13-14"></div>
+        </div>
+        <div class="row" id="14">
+          <!-- 15th row */ -->
+          <div class="col-xs-1 cell 3W" id="14-00"></div>
+          <div class="col-xs-1 cell" id="14-01"></div>
+          <div class="col-xs-1 cell" id="14-02"></div>
+          <div class="col-xs-1 cell" id="14-03"></div>
+          <div class="col-xs-1 cell" id="14-04"></div>
+          <div class="col-xs-1 cell" id="14-05"></div>
+          <div class="col-xs-1 cell" id="14-06"></div>
+          <div class="col-xs-1 cell 3W" id="14-07"></div>
+          <div class="col-xs-1 cell" id="14-08"></div>
+          <div class="col-xs-1 cell" id="14-09"></div>
+          <div class="col-xs-1 cell" id="14-10"></div>
+          <div class="col-xs-1 cell" id="14-11"></div>
+          <div class="col-xs-1 cell" id="14-12"></div>
+          <div class="col-xs-1 cell" id="14-13"></div>
+          <div class="col-xs-1 cell 3W" id="14-14"></div>
+      </div>
+    </div>
 
   </body>
 </html>
