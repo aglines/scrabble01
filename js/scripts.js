@@ -6,9 +6,7 @@ for (var i = 0; i < 15; i++) {
   var tile = new Tile(testLetters[i], i);
   initialBag.push(tile);
 }
-// console.log(arrayObj);
 
-// test dictionary
 var dictionary = ["cat", "tree", "rain", "wind"];
 
 function Bag() {
@@ -44,6 +42,19 @@ Player.prototype.buildWord = function (tile) {
   return this.currentWord.push(tile);
 };
 
+Player.prototype.playerScore = function (wordScore) {
+  debugger;
+  return this.score += wordScore;
+};
+
+Rack.prototype.generateRack = function (needNumber,initialBag) {
+  for (var i = 0; i < needNumber; i++) {
+    var currentRandomInt = getRandomInt(0, 14);
+    this.rackTiles.push(initialBag[currentRandomInt]);
+    initialBag.splice(currentRandomInt, 1);
+  };
+}
+
 Game.prototype.checkHorizontalPosition = function (currentWord) {
   var checkHorizontal;
   for (var i = 0; i < currentWord.length-1; i++) {
@@ -58,6 +69,7 @@ Game.prototype.checkHorizontalPosition = function (currentWord) {
   }
   return checkHorizontal;
 };
+
 Game.prototype.checkVerticalPosition = function (currentWord) {
   var checkVertical;
   for (var i = 0; i < currentWord.length-1; i++) {
@@ -70,38 +82,31 @@ Game.prototype.checkVerticalPosition = function (currentWord) {
   return checkVertical;
 };
 
+Game.prototype.checkValidWord = function (currentWord) {
+  return dictionary.includes(currentWord);
+
+};
+
 Game.prototype.countScore = function(currentWord, cells) {
   var currentWordScore = 0;
   debugger;
-  for (var i = 0; i < currentWord.length; i++) {
+  for (var i = 0; i < currentWord.length-1; i++) {
     // count any letters with double letter score;
     if ( cells[i].pointMultiplier === parseInt("2") ) {
       currentWord[i].letterValue *= 2;
     }
-    // add all individual tile counts (with above);
-    currentWordScore += currentWord[i].letterValue;
-
     // multiply any word-level multipliers (2w, 3W);
     if (cells[i].pointMultiplier === "2W") {
       currentWordScore *= 2;
       }
+      currentWordScore += currentWord[i].letterValue;
   }
-  return currentWordScore;
   console.log("current word score = ", currentWordScore);
-};
-
-Game.prototype.checkValidWord = function (currentWord) {
- return dictionary.includes(currentWord);
+  return currentWordScore;
 
 };
 
-Rack.prototype.generateRack = function (needNumber,initialBag) {
-  for (var i = 0; i < needNumber; i++) {
-    var currentRandomInt = getRandomInt(0, 15);
-    this.rackTiles.push(initialBag[currentRandomInt]);
-    initialBag.splice(currentRandomInt, 1);
-  };
-}
+
 
 function getRandomInt(min, max) {
 min = Math.ceil(min);
@@ -125,14 +130,17 @@ $(function () {
     var cell = new Cell(i, j, 2, rack.rackTiles[i]);
     cells.push(cell);
     player.buildWord(rack.rackTiles[i]);
-    // console.log("word = ", player.currentWord);
-    // console.log("rack.rackTiles[i] = ",rack.rackTiles[i]);
+
   }
-  console.log("game score = ", scrabbleGame.countScore(player.currentWord, cells));
-  // console.log("horiz position = ", scrabbleGame.checkHorizontalPosition(cells));
-  // console.log("vertical position = ", scrabbleGame.checkVerticalPosition(cells));
-  // console.log("array is a valid word = ",   scrabbleGame.checkValidWord("array"));
-  // console.log(word[2]);
+
+  var score = scrabbleGame.countScore(player.currentWord, cells)
+  console.log("word score1 = ", score);
+  player.playerScore(score);
+  scrabbleGame.countScore(player.currentWord, cells);
+  player.playerScore(score);
+  console.log("word score2 = ", score);
+
+  console.log("player score  ", score);
 });
 
 
