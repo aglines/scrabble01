@@ -2,11 +2,16 @@ body {
   margin: 0;
   padding: 0;
   background: #FFF3B6 url("../img/scrabbleLogo.png");
+  font-family: 'Open Sans', sans-serif;
 }
 
 h1 {
   text-align: center;
-  border: 1px solid red;
+}
+
+.nav li a {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 ul.nav {
@@ -16,23 +21,59 @@ ul.nav {
 
 .nav li a {
   color: #000;
+  animation-name: colorFlash;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+/*MAKE INACTIVE TABS FLASH*/
+@keyframes colorFlash {
+  0% {color: #000;}
+  50% {color: #FFF;}
+  100% {color: #000;}
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   background-color: #E8DDBB;
 }
 
+h3 {
+  font-size: 20px;
+  padding: 0 0 0 10px;
+  text-decoration: underline;
+}
+
+h5 {
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+p, ol li{
+  font-size: 16px;
+}
+
+#credits p {
+  margin-left: 10px;
+}
+
+#credits li {
+  list-style-image: url("../img/githubIcon.png");
+}
+
 #about, #play, #credits {
-  background-color: rgba(232, 221, 187, .7);
+  background-color: rgba(232, 221, 187, .9);
   border: 3px solid #E8DDBB;
   height: 960px;
   width: 1080px;
   margin: 0 auto;
 }
 
+/*GAME BOARD TAB*/
+
 .game-board {
-  margin-left: 50px;
+  margin: 10px 20px;
   padding: 0;
+  float: left;
 }
 
 .cell {
@@ -41,7 +82,19 @@ ul.nav {
   height: 50px;
 }
 
+#tileBag {
+  float: right;
+  cursor: pointer;
+}
+
+#playerButtons button {
+  border-radius: 3px;
+  margin: 380px 0 0 20px;
+  width: 50px;
+}
+
 #playerOneRack {
+  clear: left;
   display: visible;
   border: 1px solid red;
   background: url("");
@@ -54,13 +107,13 @@ ul.nav {
 }
 
 #playerThreeRack {
-  display: visible;
+  display: none;
   border: 1px solid purple;
   background: url("");
 }
 
 #playerFourRack {
-  display: visible;
+  display: none;
   border: 1px solid green;
   background: url("");
 }
