@@ -1,7 +1,7 @@
 // list of objects
 
 // put bag array in here until JSON works
-var initialBag = ["A", "A", "A", "A", "A", "A", "A", "A", "A", "B", "B","C","C","D","D","D","D","E","E","E","E","E","E","E","E","E","E","E","E"];
+var initialBag = ["A", "A", "B", "C", "F", "P", "O", "O", "T", "R", "S","C","V","D","I","I","N","N","M","M","E","R","R","T","L","L","Q","Z","H","J","G","_"];
 // player
 
 // bag
@@ -13,10 +13,15 @@ function Bag() {
   this.bagTiles = [];
 };
 
-function Player(name, score, rack) {
+function Board() {
+
+};
+
+function Player(name, rack) {
   this.name = name;
-  this.score = score;
+  this.score = 0;
   this.rack = rack;
+  this.currentWord = [];
 };
 
 function Cell(x, y, pointMultiplier) {
@@ -28,6 +33,34 @@ function Cell(x, y, pointMultiplier) {
 function Rack() {
   this.rackTiles = [];
   this.needNumber = 7;
+};
+
+Player.prototype.buildWord = function (tile) {
+  debugger;
+  return this.currentWord.push(tile);
+};
+
+Board.prototype.checkHorizontalPosition = function (currentWord) {
+  var checkHorizontal;
+  for (var i = 0; i < currentWord.length; i++) {
+    if (currentWord[i].x === currentWord[i+1].x) {
+      checkHorizontal = true;
+    } else {
+      checkHorizontal = false;
+    }
+  }
+  return checkHorizontal;
+};
+Board.prototype.checkVerticalPosition = function (currentWord) {
+  var checkVertical;
+  for (var i = 0; i < currentWord.length; i++) {
+    if (currentWord[i].y === currentWord[i+1].y) {
+      checkVertical = true;
+    } else {
+      checkVertical = false;
+    }
+  }
+  return checkVertical;
 };
 
 Rack.prototype.generateRack = function (needNumber,initialBag) {
@@ -65,4 +98,17 @@ $(function () {
   rack.generateRack(7, initialBag);
   console.log(rack);
   console.log(initialBag);
+
+  debugger;
+  var player = new Player ("Tom", rack);
+  var word=" ";
+  for (var i = 0, j = 0; i < 5; i++) {
+    var cell = new Cell(i, j, 2);
+    word += player.buildWord(rack.rackTiles[i]);
+    console.log(rack.rackTiles[i]);
+  }
+  console.log(word[2]);
+
+
+
 });
