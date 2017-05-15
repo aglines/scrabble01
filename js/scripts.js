@@ -1,21 +1,11 @@
 
-// list of objects
-
-// put bag array in here until JSON works
 var initialBag = ["A", "A", "B", "C", "F", "P", "O", "O", "T", "R", "S","C","V","D","I","I","N","N","M","M","E","R","R","T","L","L","Q","Z","H","J","G","_"];
-// player
-
-// bag
-// bag will start as array
-// that we splice from
-// each turn when player gets new tiles
 
 function Bag() {
   this.bagTiles = [];
 };
 
 function Board() {
-
 };
 
 function Player(name, rack) {
@@ -25,10 +15,11 @@ function Player(name, rack) {
   this.currentWord = [];
 };
 
-function Cell(x, y, pointMultiplier) {
+function Cell(x, y, pointMultiplier, value) {
   this.x = x;
   this.y = y;
   this.pointMultiplier = pointMultiplier;
+  this.value = value;
 };
 
 function Rack() {
@@ -37,13 +28,15 @@ function Rack() {
 };
 
 Player.prototype.buildWord = function (tile) {
-  debugger;
   return this.currentWord.push(tile);
 };
 
 Board.prototype.checkHorizontalPosition = function (currentWord) {
   var checkHorizontal;
-  for (var i = 0; i < currentWord.length; i++) {
+  for (var i = 0; i < currentWord.length-1; i++) {
+    console.log("currentWord[i] = ", currentWord[i]);
+    // var j = i + 1;
+    // console.log(j);
     if (currentWord[i].x === currentWord[i+1].x) {
       checkHorizontal = true;
     } else {
@@ -54,7 +47,7 @@ Board.prototype.checkHorizontalPosition = function (currentWord) {
 };
 Board.prototype.checkVerticalPosition = function (currentWord) {
   var checkVertical;
-  for (var i = 0; i < currentWord.length; i++) {
+  for (var i = 0; i < currentWord.length-1; i++) {
     if (currentWord[i].y === currentWord[i+1].y) {
       checkVertical = true;
     } else {
@@ -70,11 +63,7 @@ Rack.prototype.generateRack = function (needNumber,initialBag) {
     this.rackTiles.push(initialBag[currentRandomInt]);
     initialBag.splice(currentRandomInt, 1);
   };
-  // random number between 1 and length of array
-  // splice that number, place in Player's rack
-  // repeat until player rack full
 }
-
 
 function getRandomInt(min, max) {
 min = Math.ceil(min);
@@ -82,14 +71,6 @@ max = Math.floor(max);
 return Math.floor(Math.random() * (max - min)) + min;
 };
 
-
-// cell on board
-// board ?
-
-
-// rack
-
-//
 $(function () {
   // var word = JSON.parse(bag);
   // // console.log(JSON.parse(words));
@@ -97,21 +78,24 @@ $(function () {
   // console.log(word[1]);
   var rack = new Rack();
   rack.generateRack(7, initialBag);
-  console.log(rack);
-  console.log(initialBag);
 
-  debugger;
+  var scrabbleBoard = new Board();
   var player = new Player ("Tom", rack);
-  var word=" ";
+  // console.log("player = ", player);
+  var cells=[];
   for (var i = 0, j = 0; i < 5; i++) {
-    var cell = new Cell(i, j, 2);
-    word += player.buildWord(rack.rackTiles[i]);
-    console.log(rack.rackTiles[i]);
+    var cell = new Cell(i, j, 2, rack.rackTiles[i]);
+    cells.push(cell);
+    player.buildWord(rack.rackTiles[i]);
+    console.log("word = ", player.currentWord);
+    // console.log("rack.rackTiles[i] = ",rack.rackTiles[i]);
   }
-  console.log(word[2]);
+  scrabbleBoard.checkHorizontalPosition(cells);
+  scrabbleBoard.checkVerticalPosition(cells);
+  console.log(scrabbleBoard.checkHorizontalPosition(cells));
+  console.log(scrabbleBoard.checkVerticalPosition(cells));
 
-
-
+  // console.log(word[2]);
 });
 
 
