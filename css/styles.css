@@ -1,7 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #FFF3B6 url("../img/scrabbleLogo.png");
+}
+
+h1 {
+  text-align: center;
+  border: 1px solid red;
+}
+
+ul.nav {
+  margin-left: 50px;
+  border: none;
+}
+
+.nav li a {
+  color: #000;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+  background-color: #E8DDBB;
+}
+
+#about, #play, #credits {
+  background-color: rgba(232, 221, 187, .7);
+  border: 3px solid #E8DDBB;
+  height: 960px;
+  width: 1080px;
+  margin: 0 auto;
+}
+
+.game-board {
+  margin-left: 50px;
+  padding: 0;
+}
+
 .cell {
-  background-color: grey;
   border: 1px solid black;
   width: 50px;
   height: 50px;
+}
 
+#playerOneRack {
+  display: visible;
+  border: 1px solid red;
+  background: url("");
+}
+
+#playerTwoRack {
+  display: visible;
+  border: 1px solid blue;
+  background: url("");
+}
+
+#playerThreeRack {
+  display: visible;
+  border: 1px solid purple;
+  background: url("");
+}
+
+#playerFourRack {
+  display: visible;
+  border: 1px solid green;
+  background: url("");
+}
+
+.makeMeDraggable {
+  width: 50px;
+  height: 50px;
+  background: red;
+  cursor: move;
+}
+
+.makeMeDraggable.ui-draggable-dragging {
+  box-shadow: 10px 10px 5px #888;
 }

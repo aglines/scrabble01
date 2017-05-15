@@ -37,7 +37,7 @@ function Rack() {
 };
 
 Player.prototype.buildWord = function (tile) {
-  debugger;
+  // debugger;
   return this.currentWord.push(tile);
 };
 
@@ -100,7 +100,7 @@ $(function () {
   console.log(rack);
   console.log(initialBag);
 
-  debugger;
+  // debugger;
   var player = new Player ("Tom", rack);
   var word=" ";
   for (var i = 0, j = 0; i < 5; i++) {
