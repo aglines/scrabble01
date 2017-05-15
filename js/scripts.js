@@ -39,6 +39,7 @@ function Rack() {
 };
 
 Player.prototype.buildWord = function (tile) {
+
   return this.currentWord.push(tile);
 };
 
@@ -123,6 +124,7 @@ $(function () {
   rack.generateRack(7, initialBag);
 
   var scrabbleGame = new Game();
+
   var player = new Player ("Tom", rack);
   // console.log("player = ", player);
   var cells=[];
