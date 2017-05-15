@@ -22,8 +22,17 @@ This web application will play the game Scrabble.
 | Will total points per player.  | 5, 12  | 17 |
 | Game ends when "letter bag" is empty.  | [empty bag array]  | play until last tile on board or forfeited |
 | Will have a "letter bag."  | click letter bag button  |  "fill player rack to seven tiles unless last tiles" |
-| Player can sumbit a word. | "pet"  | check against vertical/horizontal alignment, check dictionary, tally score against point multipliers, return a score or reject. |
+| Player can submit a word. | "pet"  | check against vertical/horizontal alignment, check dictionary, tally score against point multipliers, return a score or reject. |
 
+Wish list specs
+
+|  behavior | input  | output  |
+|---|---|---|
+| A player can return a tile rack fill for new tiles but forfeit a turn. | click replace last tiles  | new pull from "letter bag." |
+| Will have an optional timer.  | Click on or off at start of game. Starts on player turn.  | 25 minutes, changes player turn |
+| Can play a computer. | choose computer  | AI plays |
+| Will give a player hints. | click hint button  | return best path |
+| Score off of multiple word builds. | "pet" + "be" + "it" off of "bid"  | 5 + 4 + 2 |
 
 
 
