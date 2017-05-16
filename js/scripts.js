@@ -318,8 +318,8 @@ $(document).ready(function(){
        snapToMiddle(ui.draggable,$(this));
        var inputCellTileString = $(this).droppable(0).attr('id').split('-');
        console.log(inputCellTileString);
-       var cellYAxis = inputCellTileString[0];
-       var cellXAxis = inputCellTileString[1];
+       var cellYAxis = parseInt(inputCellTileString[0]);
+       var cellXAxis = parseInt(inputCellTileString[1]);
        var cellScoreVariant = inputCellTileString[2];
        console.log("The cell is occupied on the y axis at: " + cellYAxis);
        console.log("The cell is occupied on the x axis at: " + cellXAxis);
