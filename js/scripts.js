@@ -1,14 +1,14 @@
 
-var testLetters = [ "A", "B", "C", "F", "P", "O", "O", "T", "R", "S","C","V","D","I","I","N","N","M","M","E","R","R","T","L","L","Q","Z","H","J","G","_"];
-var initialBag = [];
-for (var i = 0; i < 15; i++) {
-  // this is testing code;  later, check actual letterValues
-  var tile = new Tile(testLetters[i], i, 2);
-  initialBag.push(tile);
-}
+// var testLetters = [ "A", "B", "C", "F", "P", "O", "O", "T", "R", "S","C","V","D","I","I","N","N","M","M","E","R","R","T","L","L","Q","Z","H","J","G","_"];
+// var initialBag = [];
+// for (var i = 0; i < 15; i++) {
+//   // this is testing code;  later, check actual letterValues
+//   var tiles = new Tile(testLetters[i], i, 2);
+//   initialBag.push(tile);
+// }
 
-var initBag = JSON.parse(bag);
-console.log(initBag);
+var initialBag = JSON.parse(bag);
+console.log(initialBag);
 
 var dictionary = ["cat", "tree", "rain", "wind"];
 
@@ -17,23 +17,26 @@ function Bag() {
 };
 
 function Game() {
+  this.board = [];
 };
+
 function Player(name, rack) {
   this.name = name;
   this.score = 0;
   this.rack = rack;
-  this.currentWord = [];
+  this.partialWord = [];
 };
 
-function Tile(letter, letterValue) {
-  this.letter = letter;
-  this.letterValue = letterValue;
+function Tile() {
+  this.letter;
+  this.letterValue;
 };
 
-function Cell(x, y, pointMultiplier) {
+function Cell(x, y) {
   this.x = x;
   this.y = y;
-  this.pointMultiplier = pointMultiplier;
+  this.pointMultiplier = "";
+  this.occupied = false;
   this.tile = {};
 }
 
@@ -42,9 +45,52 @@ function Rack() {
   this.needNumber = 7;
 };
 
-Player.prototype.buildWord = function (tile) {
-  this.currentWord.push(tile);
+Player.prototype.buildWordSection = function (cell) {
+  this.partialWord.push(cell);
 };
+
+Game.prototype.generateBoard = function () {
+  for (var i = 0; i < 15; i++) {
+    for (var j = 0; j < 15; j++) {
+      var cell = new Cell (i, j)
+      this.board.push(cell);
+    }
+  }
+};
+
+Game.prototype.completeHorizontalWord = function (partialWord) {
+  var completeWord = [];
+  var horizontal = this.board[partialWord[0].y];// take whole horizontal array from board with y coord
+  var firstX = partialWord[0].x;
+  var lastX = partialWord[partialWord.length-1].x;
+
+// TODO: sort (cells) partialWord array
+
+  for (var i = partialWord[0].x; i <= partialWord[partialWord.length-1].x; i++) {
+    if (typeof horizontal[i].tile != 'undefined') {
+      completeWord.push(horizontal[i]);
+    } else {
+      return false;
+    }
+  }
+  debugger;
+
+  while ((firstX-1)>=0 && (typeof horizontal[firstX-1].tile != 'undefined')) {
+    completeWord.unshift(horizontal[firstX-1]);
+    firstX--;
+  }
+  while ((lastX+1<=14)&& (typeof horizontal[lastX+1].tile != 'undefined')) {
+    completeWord.push(horizontal[lastX+1]);
+    lastX++;
+  }
+  return completeWord;
+};
+
+Game.prototype.completeVerticalWord = function (partialWord) {
+
+
+};
+
 
 Player.prototype.playerScore = function (wordScore) {
   debugger;
@@ -59,22 +105,10 @@ Rack.prototype.generateRack = function (needNumber,initialBag) {
   };
 }
 
-Game.prototype.checkHorizontalPosition = function (currentWord) {
-  var checkHorizontal;
-  for (var i = 0; i < currentWord.length-1; i++) {
-    if (currentWord[i].x === currentWord[i+1].x) {
-      checkHorizontal = true;
-    } else {
-      checkHorizontal = false;
-    }
-  }
-  return checkHorizontal;
-};
-
-Game.prototype.checkVerticalPosition = function (currentWord) {
+Game.prototype.checkVerticalPosition = function () {
   var checkVertical;
-  for (var i = 0; i < currentWord.length-1; i++) {
-    if (currentWord[i].y === currentWord[i+1].y) {
+  for (var i = 0; i < .length-1; i++) {
+    if ([i].x === [i+1].x) {
       checkVertical = true;
     } else {
       checkVertical = false;
@@ -83,62 +117,75 @@ Game.prototype.checkVerticalPosition = function (currentWord) {
   return checkVertical;
 };
 
-Game.prototype.checkValidWord = function (currentWord) {
+Game.prototype.checkHorizontalPosition = function () {
+  var checkHorizontal;
+  for (var i = 0; i < .length-1; i++) {
+    if ([i].y === [i+1].y) {
+      checkHorizontal = true;
+    } else {
+      checkHorizontal = false;
+    }
+  }
+  return checkHorizontal;
+};
+
+Game.prototype.checkValidWord = function () {
   var wordString ="";
-  for (var i = 0; i < currentWord.length; i++) {
-    wordString+=currentWord[i].letterValue;
+  for (var i = 0; i < .length; i++) {
+    wordString+=[i].letterValue;
   }
   return dictionary.includes(wordString);
 
 };
 
-Game.prototype.countScore = function(currentWord) {
-  var currentWordScore = 0;
+Game.prototype.countScore = function() {
+  var Score = 0;
   debugger;
-  for (var i = 0; i < currentWord.length-1; i++) {
-    if (currentWord[i].pointMultiplier === parseInt("2")) {
-      currentWordScore += currentWord[i].letterValue * 2;
+  for (var i = 0; i < .length-1; i++) {
+    if ([i].pointMultiplier === parseInt("2")) {
+      Score += [i].letterValue * 2;
     }
     // multiply any word-level multipliers (2w, 3W);
-    if (currentWord[i].pointMultiplier === "2W") {
-      currentWordScore *= 2;
+    if ([i].pointMultiplier === "2W") {
+      Score *= 2;
     } else {
-      currentWordScore += currentWord[i].letterValue;
+      Score += [i].letterValue;
     }
   }
-  console.log("current word score = ", currentWordScore);
-  return currentWordScore;
+  console.log("current word score = ", Score);
+  return Score;
 
 };
 
 
 
 $(function () {
-  // var word = JSON.parse(bag);
-  // // console.log(JSON.parse(words));
-  // console.log(JSON.parse(word));
-  // console.log(word[1]);
+  var scrabbleGame = new Game();
+  scrabbleGame.generateBoard();
+  console.log(scrabbleGame.board);
+
   var rack = new Rack();
   rack.generateRack(7, initialBag);
 
-  var scrabbleGame = new Game();
-
   var player = new Player ("Tom", rack);
-  for (var i = 0, j = 0; i < 5; i++) {
-    var tile = new Tile(i, j, 2, rack.rackTiles[i], letter, letterValue);
-    player.buildWord(rack.rackTiles[i]);
-  }
-  console.log(player.currentWord);
 
 
-  var score = scrabbleGame.countScore(player.currentWord, cells)
-  console.log("word score1 = ", score);
-  player.playerScore(score);
-  scrabbleGame.countScore(player.currentWord, cells);
-  player.playerScore(score);
-  console.log("word score2 = ", score);
 
-  console.log("player score  ", score);
+
+  console.log(player.);
+  scrabbleGame.buildHorizontalWord(player.);
+
+
+
+
+  //var score = scrabbleGame.countScore(player., cells)
+  // console.log("word score1 = ", score);
+  // player.playerScore(score);
+  // scrabbleGame.countScore(player., cells);
+  // player.playerScore(score);
+  // console.log("word score2 = ", score);
+  //
+  // console.log("player score  ", score);
 });
 
 function getRandomInt(min, max) {
