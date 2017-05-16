@@ -316,7 +316,14 @@ $(document).ready(function(){
   $('div.row').find('.cell').droppable({
     drop:function(event, ui){
        snapToMiddle(ui.draggable,$(this));
-       console.log('The tile ' + $(".makeMeDraggable").draggable(0).attr('id') + ' is now in "' + $(this).droppable(0).attr('id') + '" square')
+       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
+       console.log(inputCellTileString);
+       var cellYAxis = inputCellTileString[0];
+       var cellXAxis = inputCellTileString[1];
+       var cellScoreVariant = inputCellTileString[2];
+       console.log("The cell is occupied on the y axis at: " + cellYAxis);
+       console.log("The cell is occupied on the x axis at: " + cellXAxis);
+       console.log("The cell has a score variant of: " + cellScoreVariant);
     }
   });
 
@@ -329,7 +336,8 @@ $(document).ready(function(){
 
 //TILE BAG USER INTERFACE
   $(".clickable img").click(function(){
-    console.log("MOAR TILES");
+    // var playerRack = newRack.generateRack(7, initialBag);
+    // console.log(generatePlayerRack);
   });
 
 //PLAYER BUTTON INPUT
