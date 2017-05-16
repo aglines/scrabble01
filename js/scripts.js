@@ -3,9 +3,12 @@ var testLetters = [ "A", "B", "C", "F", "P", "O", "O", "T", "R", "S","C","V","D"
 var initialBag = [];
 for (var i = 0; i < 15; i++) {
   // this is testing code;  later, check actual letterValues
-  var tile = new Tile(testLetters[i], i);
+  var tile = new Tile(testLetters[i], i, 2);
   initialBag.push(tile);
 }
+
+var initBag = JSON.parse(bag);
+console.log(initBag);
 
 var dictionary = ["cat", "tree", "rain", "wind"];
 
@@ -22,16 +25,17 @@ function Player(name, rack) {
   this.currentWord = [];
 };
 
+function Tile(letter, letterValue) {
+  this.letter = letter;
+  this.letterValue = letterValue;
+};
+
 function Cell(x, y, pointMultiplier) {
   this.x = x;
   this.y = y;
   this.pointMultiplier = pointMultiplier;
   this.tile = {};
-};
-function Tile(letter, letterValue) {
-  this.letter = letter;
-  this.letterValue = letterValue;
-};
+}
 
 function Rack() {
   this.rackTiles = [];
@@ -39,8 +43,7 @@ function Rack() {
 };
 
 Player.prototype.buildWord = function (tile) {
-
-  return this.currentWord.push(tile);
+  this.currentWord.push(tile);
 };
 
 Player.prototype.playerScore = function (wordScore) {
@@ -50,7 +53,7 @@ Player.prototype.playerScore = function (wordScore) {
 
 Rack.prototype.generateRack = function (needNumber,initialBag) {
   for (var i = 0; i < needNumber; i++) {
-    var currentRandomInt = getRandomInt(0, 14);
+    var currentRandomInt = getRandomInt(0, initialBag.length-1);
     this.rackTiles.push(initialBag[currentRandomInt]);
     initialBag.splice(currentRandomInt, 1);
   };
@@ -59,9 +62,6 @@ Rack.prototype.generateRack = function (needNumber,initialBag) {
 Game.prototype.checkHorizontalPosition = function (currentWord) {
   var checkHorizontal;
   for (var i = 0; i < currentWord.length-1; i++) {
-    console.log("currentWord[i] = ", currentWord[i]);
-    // var j = i + 1;
-    // console.log(j);
     if (currentWord[i].x === currentWord[i+1].x) {
       checkHorizontal = true;
     } else {
@@ -84,23 +84,27 @@ Game.prototype.checkVerticalPosition = function (currentWord) {
 };
 
 Game.prototype.checkValidWord = function (currentWord) {
-  return dictionary.includes(currentWord);
+  var wordString ="";
+  for (var i = 0; i < currentWord.length; i++) {
+    wordString+=currentWord[i].letterValue;
+  }
+  return dictionary.includes(wordString);
 
 };
 
-Game.prototype.countScore = function(currentWord, cells) {
+Game.prototype.countScore = function(currentWord) {
   var currentWordScore = 0;
   debugger;
   for (var i = 0; i < currentWord.length-1; i++) {
-    // count any letters with double letter score;
-    if ( cells[i].pointMultiplier === parseInt("2") ) {
-      currentWord[i].letterValue *= 2;
+    if (currentWord[i].pointMultiplier === parseInt("2")) {
+      currentWordScore += currentWord[i].letterValue * 2;
     }
     // multiply any word-level multipliers (2w, 3W);
-    if (cells[i].pointMultiplier === "2W") {
+    if (currentWord[i].pointMultiplier === "2W") {
       currentWordScore *= 2;
-      }
+    } else {
       currentWordScore += currentWord[i].letterValue;
+    }
   }
   console.log("current word score = ", currentWordScore);
   return currentWordScore;
@@ -108,12 +112,6 @@ Game.prototype.countScore = function(currentWord, cells) {
 };
 
 
-
-function getRandomInt(min, max) {
-min = Math.ceil(min);
-max = Math.floor(max);
-return Math.floor(Math.random() * (max - min)) + min;
-};
 
 $(function () {
   // var word = JSON.parse(bag);
@@ -126,14 +124,12 @@ $(function () {
   var scrabbleGame = new Game();
 
   var player = new Player ("Tom", rack);
-  // console.log("player = ", player);
-  var cells=[];
   for (var i = 0, j = 0; i < 5; i++) {
-    var cell = new Cell(i, j, 2, rack.rackTiles[i]);
-    cells.push(cell);
+    var tile = new Tile(i, j, 2, rack.rackTiles[i], letter, letterValue);
     player.buildWord(rack.rackTiles[i]);
-
   }
+  console.log(player.currentWord);
+
 
   var score = scrabbleGame.countScore(player.currentWord, cells)
   console.log("word score1 = ", score);
@@ -145,6 +141,11 @@ $(function () {
   console.log("player score  ", score);
 });
 
+function getRandomInt(min, max) {
+min = Math.ceil(min);
+max = Math.floor(max);
+return Math.floor(Math.random() * (max - min)) + min;
+};
 
 
 // buildGameGrid(row, col){
