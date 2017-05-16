@@ -96,7 +96,7 @@ p, ol li{
 }
 
 .scrabbleBG {
-  margin: 0;
+  margin: 0 0 15px;
   padding: 0;
   background: url("../img/board-bckgrnd.png");
   width: 750px;
@@ -117,8 +117,27 @@ p, ol li{
 #tileBag {
   float: right;
   cursor: pointer;
+  height: 300px;
+  width: 300px;
 }
 
+#tileBag h4 {
+  padding: 0;
+  text-align: center;
+  animation-name: colorFlash;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+#tileBag img {
+  margin-top: -50px;
+}
+
+.subscript {
+  font-size: 20px;
+}
+
+/*PLAYER RACKS*/
 #playerButtons button {
   border-radius: 3px;
   margin: 380px 0 0 20px;
@@ -130,6 +149,8 @@ p, ol li{
   display: visible;
   margin-top: 5px;
   margin-bottom: 5px;
+  text-align: center;
+  padding: 3px;
   width: 460px;
   height: 61px;
   background: url("../img/rack.png") no-repeat;
@@ -139,10 +160,11 @@ p, ol li{
   display: inline-block;
   width: 48px;
   height: 48px;
+  text-align: center;
 }
 
 #playerTwoRack {
-  display: visible;
+  display: none;
   margin-top: 5px;
   margin-bottom: 5px;
   width: 460px;
@@ -168,10 +190,9 @@ p, ol li{
   background: url("../img/rack.png");
 }
 
-.makeMeDraggable {
+.draggable {
   width: 48px;
   height: 48px;
-  background: red;
   cursor: move;
   font-size: 36px;
   text-align: center;
@@ -179,6 +200,6 @@ p, ol li{
   background-image: url(../img/traditional-tile.png);
 }
 
-.makeMeDraggable.ui-draggable-dragging {
+.draggable.ui-draggable-dragging {
   box-shadow: 10px 10px 5px #888;
 }
