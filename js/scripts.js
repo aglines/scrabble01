@@ -57,7 +57,9 @@ Game.prototype.Turn = function () {
     if (checkVerticalPosition()) {
       completeVerticalWord(this.currentPlayer.partialWord);
     }
-  if ( checkValidWord(this.currentPlayer.completeWord)
+  if ( checkValidWord(this.currentPlayer.completeWord)) {
+      countScore();
+  }
   }
 }; // TURN function
 
@@ -157,25 +159,16 @@ Rack.prototype.generateRack = function (needNumber,initialBag) {
 }
 
 Game.prototype.checkForEndGame = function () {
-  // game ends when conditions met:
-  // 1. initialBag is empty
-  // 2. one player's rack is empty
-  // for (var i = 1; i <= numberOfPlayers.length; i+1) {
-  //   // check player rack to see if empty
-  // }
-  // if ( initialBag === []) &&
-  //
-  // }
+  if (true) {
+
+  }
 };
 
 
 Game.prototype.checkVerticalPosition = function () {
   var checkVertical;
-<<<<<<< HEAD
   for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
-=======
-  for (var i = 0; i < partialWord.length-1; i++) {
->>>>>>> 83406f9cc6bc949bfcf78ad57c461ac4c4d41935
+
     if ([i].x === [i+1].x) {
       checkVertical = true;
     } else {
@@ -187,11 +180,9 @@ Game.prototype.checkVerticalPosition = function () {
 
 Game.prototype.checkHorizontalPosition = function () {
   var checkHorizontal;
-<<<<<<< HEAD
+
   for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
-=======
-  for (var i = 0; i < partialWord.length-1; i++) {
->>>>>>> 83406f9cc6bc949bfcf78ad57c461ac4c4d41935
+
     if ([i].y === [i+1].y) {
       checkHorizontal = true;
     } else {
@@ -206,7 +197,7 @@ Game.prototype.checkValidWord = function () {
 
   for (var i = 0; i < this.currentPlayer.currentWord.length; i++) {
     wordString+=this.currentPlayer.currentWord[i].tile.letter;
-    console.log("this.currentPlayer.currentWord[i].tile.letter = "this.currentPlayer.currentWord[i].tile.letter);
+    console.log("this.currentPlayer.currentWord[i].tile.letter = ",  this.currentPlayer.currentWord[i].tile.letter);
 
   }
   return dictionary.includes(wordString);
@@ -219,8 +210,6 @@ Game.prototype.countScore = function() {
   debugger;
 
   for (var i = 0; i < this.currentPlayer.currentWord.length-1; i++) {
-
-
 
     if (this.currentPlayer.currentWord[i].pointMultiplier === "2L") {
       currentWordScore += this.currentPlayer.currentWord[i].tile.letterValue * 2
@@ -254,7 +243,6 @@ $(function () {
   rack.generateRack(7, initialBag);
   var player = new Player ("Tom", rack);
 
-
 });
 
 function getRandomInt(min, max) {
@@ -262,7 +250,6 @@ min = Math.ceil(min);
 max = Math.floor(max);
 return Math.floor(Math.random() * (max - min)) + min;
 };
-
 
 
 //  };
@@ -367,6 +354,7 @@ $(document).ready(function(){
   });
 
   $("button#pass").click(function(){
+    var turnType = "pass";
     console.log("PASS");
   });
 });
