@@ -301,18 +301,6 @@ return Math.floor(Math.random() * (max - min)) + min;
 
 $(document).ready(function(){
 //DRAG AND DROP SQUARES
-  // $(".makeMeDraggable").draggable({
-  //   containment: '.container',
-  //   snap: '.cell, .makeMeDraggable',
-  //   snapMode: 'outter'
-  // });
-  // $(".makeMeDroppable").droppable({
-  //   drop: handleDropEvent
-  // });
-  // function handleDropEvent(event, ui) {
-  //   var draggable = ui.draggable;
-  //   console.log('The tile ' + $(".makeMeDraggable").draggable(0).attr('id') + ' is now in "' + $(this).droppable(0).attr('id') + '" square')
-  // };
   $("div.makeMeDraggable").draggable( {
     opacity: .4,
     create: function(){
@@ -322,19 +310,17 @@ $(document).ready(function(){
     cursor: 'move',
     start: function(){
       $(this).stop(true,true)
-      console.log("DRAGGABLE")
     }
   });
 
   $('div.row').find('.cell').droppable({
     drop:function(event, ui){
        snapToMiddle(ui.draggable,$(this));
-       console.log("DROPPABLE");
+       console.log('The tile ' + $(".makeMeDraggable").draggable(0).attr('id') + ' is now in "' + $(this).droppable(0).attr('id') + '" square')
     }
   });
 
   function snapToMiddle(dragger, target){
-    // debugger;
     var offset = target.offset();
     var topMove = (target.outerHeight(true) - dragger.outerHeight(true)) / 2;
     var leftMove= (target.outerWidth(true) - dragger.outerWidth(true)) / 2;
