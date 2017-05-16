@@ -300,8 +300,19 @@ return Math.floor(Math.random() * (max - min)) + min;
 ////////////////////// USER INTERFACE
 
 $(document).ready(function(){
-//DRAG AND DROP SQUARES
-  $("div.makeMeDraggable").draggable( {
+
+//TILE BAG USER INTERFACE
+  $(".clickable img").click(function(){
+    var newPlayerRack = new Rack();
+    newPlayerRack.generateRack(7, initialBag);
+    for(i=0; i <= newPlayerRack.rackTiles.length-1; i++){
+      console.log(newPlayerRack.rackTiles[i]);
+      $("div#playerOneRack").append("<div class='makeMeDraggable draggable letter" + newPlayerRack.rackTiles[i].letter + "'>" + newPlayerRack.rackTiles[i].letter + "</div>");
+    }
+    $(".draggable").draggable();
+  });
+  //DRAG AND DROP SQUARES
+  $("div.draggable").draggable( {
     opacity: .4,
     create: function(){
       $(this).data('position',$(this).position())
@@ -315,15 +326,15 @@ $(document).ready(function(){
 
   $('div.row').find('.cell').droppable({
     drop:function(event, ui){
-       snapToMiddle(ui.draggable,$(this));
-       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
-       console.log(inputCellTileString);
-       var cellYAxis = inputCellTileString[0];
-       var cellXAxis = inputCellTileString[1];
-       var cellScoreVariant = inputCellTileString[2];
-       console.log("The cell is occupied on the y axis at: " + cellYAxis);
-       console.log("The cell is occupied on the x axis at: " + cellXAxis);
-       console.log("The cell has a score variant of: " + cellScoreVariant);
+      snapToMiddle(ui.draggable,$(this));
+      var inputCellTileString = $(this).droppable(0).attr('id').split('-');
+      console.log(inputCellTileString);
+      var cellYAxis = parseInt(inputCellTileString[0]);
+      var cellXAxis = parseInt(inputCellTileString[1]);
+      var cellScoreVariant = inputCellTileString[2];
+      console.log("The cell is occupied on the y axis at: " + cellYAxis);
+      console.log("The cell is occupied on the x axis at: " + cellXAxis);
+      console.log("The cell has a score variant of: " + cellScoreVariant);
     }
   });
 
@@ -333,12 +344,6 @@ $(document).ready(function(){
     var leftMove= (target.outerWidth(true) - dragger.outerWidth(true)) / 2;
     dragger.offset({ top: topMove + offset.top, left: leftMove + offset.left });
   };
-
-//TILE BAG USER INTERFACE
-  $(".clickable img").click(function(){
-    // var playerRack = newRack.generateRack(7, initialBag);
-    // console.log(generatePlayerRack);
-  });
 
 //PLAYER BUTTON INPUT
   $("button#score").click(function(){
