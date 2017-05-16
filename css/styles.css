@@ -76,6 +76,10 @@ p, ol li{
   float: left;
 }
 
+.row{
+  padding: 0;
+}
+
 .cell {
   border: 1px solid black;
   width: 50px;

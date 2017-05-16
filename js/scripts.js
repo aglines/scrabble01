@@ -44,7 +44,7 @@ Player.prototype.buildWord = function (tile) {
 };
 
 Player.prototype.playerScore = function (wordScore) {
-  debugger;
+  // debugger;
   return this.score += wordScore;
 };
 
@@ -90,7 +90,7 @@ Game.prototype.checkValidWord = function (currentWord) {
 
 Game.prototype.countScore = function(currentWord, cells) {
   var currentWordScore = 0;
-  debugger;
+  // debugger;
   for (var i = 0; i < currentWord.length-1; i++) {
     // count any letters with double letter score;
     if ( cells[i].pointMultiplier === parseInt("2") ) {
@@ -160,3 +160,107 @@ $(function () {
 //     }
 //     return GameArray
 //  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////// USER INTERFACE
+
+$(document).ready(function(){
+//DRAG AND DROP SQUARES
+  // $(".makeMeDraggable").draggable({
+  //   containment: '.container',
+  //   snap: '.cell, .makeMeDraggable',
+  //   snapMode: 'outter'
+  // });
+  // $(".makeMeDroppable").droppable({
+  //   drop: handleDropEvent
+  // });
+  // function handleDropEvent(event, ui) {
+  //   var draggable = ui.draggable;
+  //   console.log('The tile ' + $(".makeMeDraggable").draggable(0).attr('id') + ' is now in "' + $(this).droppable(0).attr('id') + '" square')
+  // };
+  $("div.makeMeDraggable").draggable( {
+    opacity: .4,
+    create: function(){
+      $(this).data('position',$(this).position())
+    },
+    cursorAt: {left:15},
+    cursor: 'move',
+    start: function(){
+      $(this).stop(true,true)
+      console.log("DRAGGABLE")
+    }
+  });
+
+  $('div.row').find('.cell').droppable({
+    drop:function(event, ui){
+       snapToMiddle(ui.draggable,$(this));
+       console.log("DROPPABLE");
+    }
+  });
+
+  function snapToMiddle(dragger, target){
+    // debugger;
+    var offset = target.offset();
+    var topMove = (target.outerHeight(true) - dragger.outerHeight(true)) / 2;
+    var leftMove= (target.outerWidth(true) - dragger.outerWidth(true)) / 2;
+    dragger.offset({ top: topMove + offset.top, left: leftMove + offset.left });
+  };
+
+//TILE BAG USER INTERFACE
+  $(".clickable img").click(function(){
+    console.log("MOAR TILES");
+  });
+
+//PLAYER BUTTON INPUT
+  $("button#score").click(function(){
+    console.log("SCORE!");
+  });
+
+  $("button#reset").click(function(){
+    console.log("RESET");
+  });
+
+  $("button#pass").click(function(){
+    console.log("PASS");
+  });
+});
