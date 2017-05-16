@@ -74,6 +74,8 @@ p, ol li{
   margin: 10px 20px;
   padding: 0;
   float: left;
+  background-image: url("../img/board-bckgrnd.png");
+  background-size: 100% 100%;
 }
 
 .row{
@@ -101,25 +103,26 @@ p, ol li{
   clear: left;
   display: visible;
   border: 1px solid red;
-  background: url("");
+  width: 500px;
+  background-image: url("../img/rack.png");
 }
 
 #playerTwoRack {
   display: visible;
   border: 1px solid blue;
-  background: url("");
+  background: url("../img/rack.png");
 }
 
 #playerThreeRack {
   display: none;
   border: 1px solid purple;
-  background: url("");
+  background: url("../img/rack.png");
 }
 
 #playerFourRack {
   display: none;
   border: 1px solid green;
-  background: url("");
+  background: url("../img/rack.png");
 }
 
 .makeMeDraggable {
