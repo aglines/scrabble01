@@ -104,7 +104,7 @@ Game.prototype.completeVerticalWord = function (partialWord) {
 
   var completeWord = [];
   var vertical = this.board[partialWord[0].x]; //take whole vertical array
-  var firstY = partialWord[0].y;
+  var firstY = partialWord][0].y;
   var lastY = partialWord[partialWord.length-1].y;
 
   // TODO: sort (cells) partialWord array
@@ -155,7 +155,7 @@ Rack.prototype.generateRack = function (needNumber,initialBag) {
 
 Game.prototype.checkVerticalPosition = function () {
   var checkVertical;
-  for (var i = 0; i < partialWord.length-1; i++) {
+  for (var i = 0; i < .length-1; i++) {
     if ([i].x === [i+1].x) {
       checkVertical = true;
     } else {
@@ -167,7 +167,7 @@ Game.prototype.checkVerticalPosition = function () {
 
 Game.prototype.checkHorizontalPosition = function () {
   var checkHorizontal;
-  for (var i = 0; i < partial.length-1; i++) {
+  for (var i = 0; i < .length-1; i++) {
     if ([i].y === [i+1].y) {
       checkHorizontal = true;
     } else {
@@ -181,7 +181,7 @@ Game.prototype.checkHorizontalPosition = function () {
 
 Game.prototype.checkValidWord = function () {
   var wordString ="";
-  for (var i = 0; i < currentWord.length; i++) {
+  for (var i = 0; i < .length; i++) {
     wordString+=[i].letterValue;
   }
   return dictionary.includes(wordString);
@@ -191,7 +191,7 @@ Game.prototype.checkValidWord = function () {
 Game.prototype.countScore = function() {
   var Score = 0;
   debugger;
-  for (var i = 0; i < currentWord.length-1; i++) {
+  for (var i = 0; i < .length-1; i++) {
     if ([i].pointMultiplier === parseInt("2")) {
       Score += [i].letterValue * 2;
 
@@ -225,6 +225,8 @@ $(function () {
 
 
 
+  console.log(player.);
+  scrabbleGame.buildHorizontalWord(player.);
 
 
 
@@ -249,6 +251,8 @@ return Math.floor(Math.random() * (max - min)) + min;
 
 
 //  };
+
+
 
 
 
