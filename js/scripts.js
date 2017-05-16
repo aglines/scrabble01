@@ -171,7 +171,11 @@ Game.prototype.checkForEndGame = function () {
 
 Game.prototype.checkVerticalPosition = function () {
   var checkVertical;
+<<<<<<< HEAD
   for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
+=======
+  for (var i = 0; i < partialWord.length-1; i++) {
+>>>>>>> 83406f9cc6bc949bfcf78ad57c461ac4c4d41935
     if ([i].x === [i+1].x) {
       checkVertical = true;
     } else {
@@ -183,7 +187,11 @@ Game.prototype.checkVerticalPosition = function () {
 
 Game.prototype.checkHorizontalPosition = function () {
   var checkHorizontal;
+<<<<<<< HEAD
   for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
+=======
+  for (var i = 0; i < partialWord.length-1; i++) {
+>>>>>>> 83406f9cc6bc949bfcf78ad57c461ac4c4d41935
     if ([i].y === [i+1].y) {
       checkHorizontal = true;
     } else {
@@ -195,9 +203,11 @@ Game.prototype.checkHorizontalPosition = function () {
 
 Game.prototype.checkValidWord = function () {
   var wordString ="";
+
   for (var i = 0; i < this.currentPlayer.currentWord.length; i++) {
     wordString+=this.currentPlayer.currentWord[i].tile.letter;
     console.log("this.currentPlayer.currentWord[i].tile.letter = "this.currentPlayer.currentWord[i].tile.letter);
+
   }
   return dictionary.includes(wordString);
 
@@ -207,7 +217,9 @@ Game.prototype.countScore = function() {
   var wordScoreMultiplier = 1;
   var currentWordScore = 0;
   debugger;
+
   for (var i = 0; i < this.currentPlayer.currentWord.length-1; i++) {
+
 
 
     if (this.currentPlayer.currentWord[i].pointMultiplier === "2L") {
@@ -242,6 +254,7 @@ $(function () {
   rack.generateRack(7, initialBag);
   var player = new Player ("Tom", rack);
 
+
 });
 
 function getRandomInt(min, max) {
@@ -253,3 +266,107 @@ return Math.floor(Math.random() * (max - min)) + min;
 
 
 //  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////// USER INTERFACE
+
+$(document).ready(function(){
+//DRAG AND DROP SQUARES
+  $("div.makeMeDraggable").draggable( {
+    opacity: .4,
+    create: function(){
+      $(this).data('position',$(this).position())
+    },
+    cursorAt: {left:15},
+    cursor: 'move',
+    start: function(){
+      $(this).stop(true,true)
+    }
+  });
+
+  $('div.row').find('.cell').droppable({
+    drop:function(event, ui){
+       snapToMiddle(ui.draggable,$(this));
+       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
+       console.log(inputCellTileString);
+       var cellYAxis = inputCellTileString[0];
+       var cellXAxis = inputCellTileString[1];
+       var cellScoreVariant = inputCellTileString[2];
+       console.log("The cell is occupied on the y axis at: " + cellYAxis);
+       console.log("The cell is occupied on the x axis at: " + cellXAxis);
+       console.log("The cell has a score variant of: " + cellScoreVariant);
+    }
+  });
+
+  function snapToMiddle(dragger, target){
+    var offset = target.offset();
+    var topMove = (target.outerHeight(true) - dragger.outerHeight(true)) / 2;
+    var leftMove= (target.outerWidth(true) - dragger.outerWidth(true)) / 2;
+    dragger.offset({ top: topMove + offset.top, left: leftMove + offset.left });
+  };
+
+//TILE BAG USER INTERFACE
+  $(".clickable img").click(function(){
+    // var playerRack = newRack.generateRack(7, initialBag);
+    // console.log(generatePlayerRack);
+  });
+
+//PLAYER BUTTON INPUT
+  $("button#score").click(function(){
+    console.log("SCORE!");
+  });
+
+  $("button#reset").click(function(){
+    console.log("RESET");
+  });
+
+  $("button#pass").click(function(){
+    console.log("PASS");
+  });
+});
