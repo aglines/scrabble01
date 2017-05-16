@@ -190,7 +190,7 @@ p, ol li{
   background: url("../img/rack.png");
 }
 
-.makeMeDraggable {
+.draggable {
   width: 48px;
   height: 48px;
   cursor: move;
@@ -200,6 +200,6 @@ p, ol li{
   background-image: url(../img/traditional-tile.png);
 }
 
-.makeMeDraggable.ui-draggable-dragging {
+.draggable.ui-draggable-dragging {
   box-shadow: 10px 10px 5px #888;
 }
