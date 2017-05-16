@@ -307,7 +307,7 @@ $(document).ready(function(){
     newPlayerRack.generateRack(7, initialBag);
     for(i=0; i <= newPlayerRack.rackTiles.length-1; i++){
       console.log(newPlayerRack.rackTiles[i]);
-      $("#playerOneRack").append("<div class='makeMeDraggable draggable letter" + newPlayerRack.rackTiles[i].letter + "'>" + newPlayerRack.rackTiles[i].letter + '<span class="subscript">' + newPlayerRack.rackTiles[i].letterValue.sub() + '</span>' + "</div></div>");
+      $("#playerOneRack").append("<div class='draggable letter" + newPlayerRack.rackTiles[i].letter + "'>" + newPlayerRack.rackTiles[i].letter + '<span class="subscript">' + newPlayerRack.rackTiles[i].letterValue.sub() + '</span>' + "</div></div>");
     }
     $(".draggable").draggable();
   });
@@ -320,7 +320,7 @@ $(document).ready(function(){
     cursorAt: {left:15},
     cursor: 'move',
     start: function(){
-      $(this).stop(true,true)
+      $(this).stop(true,true);
     }
   });
 
@@ -329,6 +329,8 @@ $(document).ready(function(){
       snapToMiddle(ui.draggable,$(this));
       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
       console.log(inputCellTileString);
+      $()
+      var tileID = 0;
       var cellYAxis = parseInt(inputCellTileString[0]);
       var cellXAxis = parseInt(inputCellTileString[1]);
       var cellScoreVariant = inputCellTileString[2];
