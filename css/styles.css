@@ -116,6 +116,12 @@ p, ol li{
   background: url("../img/rack.png") no-repeat;
 }
 
+#playerOneRack div {
+  display: inline-block;
+  width: 48px;
+  height 48px;
+}
+
 #playerTwoRack {
   display: visible;
   border: 1px solid blue;
