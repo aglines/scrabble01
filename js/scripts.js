@@ -12,7 +12,7 @@ function Bag() {
 
 function Game() {
   this.board = [];
-  this.currentPlayer = "";
+  this.currentPlayer = {};
 };
 
 function Player(name, rack) {
@@ -24,14 +24,15 @@ function Player(name, rack) {
 };
 
 function Tile() {
+  this.id;
   this.letter;
   this.letterValue;
 };
 
-function Cell(x, y) {
+function Cell(x, y, pointMultiplier, tile) {
   this.x = x;
   this.y = y;
-  this.pointMultiplier = "";
+  this.pointMultiplier = pointMultiplier;
   this.occupied = false;
   this.tile = {};
 }
@@ -42,31 +43,27 @@ function Rack() {
 };
 
 
-Game.prototype.Turn = function () {
-  // option to pass :
-  var turnType = ""
-  if (turnType === "pass") {
-    // go to next turn;  return?
-  }
-  if (turnType === "submit") {
-    // we're given partialWord letters, build completeWord
-      // for now, only check ONE word style, the one they meant to play
-    if (checkHorizontalPosition()) {
-            completeHorizontalWord(this.currentPlayer.partialWord);
+
+Game.prototype.Turn = function (player) {
+  this.currentPlayer = player;
+
+    if (this.checkHorizontalPosition()) {
+            this.completeHorizontalWord(this.currentPlayer.partialWord);
     }
-    if (checkVerticalPosition()) {
-      completeVerticalWord(this.currentPlayer.partialWord);
+    if (this.checkVerticalPosition()) {
+      this.completeVerticalWord(this.currentPlayer.partialWord);
     }
-  if ( checkValidWord(this.currentPlayer.completeWord)) {
+  if ( this.checkValidWord(this.currentPlayer.completeWord)) {
       countScore();
+      console.log(countScore());
   }
-  }
+
 }; // TURN function
 
 
-Player.prototype.buildWordSection = function (cell) {
-  this.partialWord.push(cell);
-};
+// Player.prototype.buildWordSection = function (cell) {
+//   this.partialWord.push(cell);
+// };
 
 Game.prototype.generateBoard = function () {
   for (var i = 0; i < 15; i++) {
@@ -140,8 +137,6 @@ Game.prototype.completeVerticalWord = function (partialWord) {
   return completeWord;
 };
 
-// assemble "partial" word, player's new tiles
-// completeWord will be new tiles plus old tiles already on board
 Player.prototype.buildPartialWord = function (cell) {
   this.partialWord.push(cell);
 };
@@ -160,10 +155,8 @@ Rack.prototype.generateRack = function (needNumber,initialBag) {
 
 Game.prototype.checkForEndGame = function () {
   if (true) {
-
   }
 };
-
 
 Game.prototype.checkVerticalPosition = function () {
   var checkVertical;
@@ -207,9 +200,11 @@ Game.prototype.checkValidWord = function () {
 Game.prototype.countScore = function() {
   var wordScoreMultiplier = 1;
   var currentWordScore = 0;
-  debugger;
+  // debugger;
+  console.log("this.currentPlayer.currentWord[0] = ", this.currentPlayer.currentWord[0]);
+  for (var i = 0; i <= this.currentPlayer.currentWord.length-1; i++) {
 
-  for (var i = 0; i < this.currentPlayer.currentWord.length-1; i++) {
+    console.log("current letter value = ", this.currentPlayer.currentWord[i].tile.letterValue);
 
     if (this.currentPlayer.currentWord[i].pointMultiplier === "2L") {
       currentWordScore += this.currentPlayer.currentWord[i].tile.letterValue * 2
@@ -230,20 +225,10 @@ Game.prototype.countScore = function() {
       }
   };
   currentWordScore *= wordScoreMultiplier;
+  console.log("currentWordScore = ", currentWordScore);
   return currentWordScore;
 };
-//===========================================================================
 
-$(function () {
-  var scrabbleGame = new Game();
-  scrabbleGame.generateBoard();
-  // console.table(scrabbleGame.board);
-
-  var rack = new Rack();
-  rack.generateRack(7, initialBag);
-  var player = new Player ("Tom", rack);
-
-});
 
 function getRandomInt(min, max) {
 min = Math.ceil(min);
@@ -251,8 +236,11 @@ max = Math.floor(max);
 return Math.floor(Math.random() * (max - min)) + min;
 };
 
+//===========================================================================
 
-//  };
+
+
+
 
 
 
@@ -304,14 +292,22 @@ return Math.floor(Math.random() * (max - min)) + min;
 ////////////////////// USER INTERFACE
 
 $(document).ready(function(){
+    var scrabbleGame = new Game();
+    scrabbleGame.generateBoard();
+    var newPlayerRack = new Rack();
+    var playerOne = new Player ("Tom", newPlayerRack);
+    var playerTwo = new Player ("Mary", newPlayerRack);
+
+    scrabbleGame.currentPlayer = playerOne;
+
 
 //TILE BAG USER INTERFACE
   $(".clickable img").click(function(){
-    var newPlayerRack = new Rack();
+    // var newPlayerRack = new Rack();
     newPlayerRack.generateRack(7, initialBag);
     for(i=0; i <= newPlayerRack.rackTiles.length-1; i++){
       console.log(newPlayerRack.rackTiles[i]);
-      $("div#playerOneRack").append("<div class='makeMeDraggable draggable letter" + newPlayerRack.rackTiles[i].letter + "'>" + newPlayerRack.rackTiles[i].letter + "</div>");
+      $("div#playerOneRack").append("<div class='makeMeDraggable draggable letter" + newPlayerRack.rackTiles[i].letter + "' id='" + newPlayerRack.rackTiles[i].id + "'>" + newPlayerRack.rackTiles[i].letter + "</div>");
     }
     $(".draggable").draggable();
   });
@@ -333,12 +329,17 @@ $(document).ready(function(){
       snapToMiddle(ui.draggable,$(this));
       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
       console.log(inputCellTileString);
+      // $(this).addID($(".makeMeDraggable").draggable(0).attr('id'));
       var cellYAxis = parseInt(inputCellTileString[0]);
       var cellXAxis = parseInt(inputCellTileString[1]);
       var cellScoreVariant = inputCellTileString[2];
-      console.log("The cell is occupied on the y axis at: " + cellYAxis);
-      console.log("The cell is occupied on the x axis at: " + cellXAxis);
-      console.log("The cell has a score variant of: " + cellScoreVariant);
+      var newCell = new Cell(cellXAxis, cellYAxis, cellScoreVariant);
+      console.log(newCell);
+      console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
+
+      // console.log("The cell is occupied on the y axis at: " + cellYAxis);
+      // console.log("The cell is occupied on the x axis at: " + cellXAxis);
+      // console.log("The cell has a score variant of: " + cellScoreVariant);
     }
   });
 
@@ -351,7 +352,8 @@ $(document).ready(function(){
 
 //PLAYER BUTTON INPUT
   $("button#score").click(function(){
-    console.log("SCORE!");
+    // console.log("SCORE!");
+    scrabbleGame.countScore();
   });
 
   $("button#reset").click(function(){
@@ -360,6 +362,7 @@ $(document).ready(function(){
 
   $("button#pass").click(function(){
     var turnType = "pass";
+
     console.log("PASS");
   });
 });
