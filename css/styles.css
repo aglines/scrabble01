@@ -71,17 +71,30 @@ p, ol li{
 /*GAME BOARD TAB*/
 
 .game-board {
-  margin: 10px 20px;
+  margin: -3px 0 0 16px;
   padding: 0;
   float: left;
-  background-image: url("../img/board-bckgrnd.png");
-  background-size: 100% 100%;
+  background-size: fill;
+}
+
+.scrabbleBG {
+  margin: 0;
+  padding: 0;
+  background: url("../img/board-bckgrnd.png");
+  width: 750px;
+  height: 750px;
+  float: left;
+}
+
+.row {
+  padding: 0;
 }
 
 .cell {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   width: 50px;
   height: 50px;
+  padding: 0;
 }
 
 #tileBag {
@@ -100,13 +113,14 @@ p, ol li{
   display: visible;
   border: 1px solid red;
   width: 500px;
-  background-image: url("../img/rack.png");
+  background: url("../img/rack.png") no-repeat;
 }
 
 #playerTwoRack {
   display: visible;
   border: 1px solid blue;
-  background: url("../img/rack.png");
+  width: 500px;
+  background: url("../img/rack.png") no-repeat;
 }
 
 #playerThreeRack {
@@ -122,8 +136,8 @@ p, ol li{
 }
 
 .makeMeDraggable {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   background: red;
   cursor: move;
 }
