@@ -104,7 +104,7 @@ Game.prototype.completeVerticalWord = function (partialWord) {
 
   var completeWord = [];
   var vertical = this.board[partialWord[0].x]; //take whole vertical array
-  var firstY = partialWord][0].y;
+  var firstY = partialWord[0].y;
   var lastY = partialWord[partialWord.length-1].y;
 
   // TODO: sort (cells) partialWord array
@@ -155,7 +155,7 @@ Rack.prototype.generateRack = function (needNumber,initialBag) {
 
 Game.prototype.checkVerticalPosition = function () {
   var checkVertical;
-  for (var i = 0; i < .length-1; i++) {
+  for (var i = 0; i < partialWord.length-1; i++) {
     if ([i].x === [i+1].x) {
       checkVertical = true;
     } else {
@@ -167,7 +167,7 @@ Game.prototype.checkVerticalPosition = function () {
 
 Game.prototype.checkHorizontalPosition = function () {
   var checkHorizontal;
-  for (var i = 0; i < .length-1; i++) {
+  for (var i = 0; i < partial.length-1; i++) {
     if ([i].y === [i+1].y) {
       checkHorizontal = true;
     } else {
@@ -181,7 +181,7 @@ Game.prototype.checkHorizontalPosition = function () {
 
 Game.prototype.checkValidWord = function () {
   var wordString ="";
-  for (var i = 0; i < .length; i++) {
+  for (var i = 0; i < currentWord.length; i++) {
     wordString+=[i].letterValue;
   }
   return dictionary.includes(wordString);
@@ -191,7 +191,7 @@ Game.prototype.checkValidWord = function () {
 Game.prototype.countScore = function() {
   var Score = 0;
   debugger;
-  for (var i = 0; i < .length-1; i++) {
+  for (var i = 0; i < currentWord.length-1; i++) {
     if ([i].pointMultiplier === parseInt("2")) {
       Score += [i].letterValue * 2;
 
@@ -225,8 +225,6 @@ $(function () {
 
 
 
-  console.log(player.);
-  scrabbleGame.buildHorizontalWord(player.);
 
 
 
@@ -251,3 +249,111 @@ return Math.floor(Math.random() * (max - min)) + min;
 
 
 //  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////// USER INTERFACE
+
+$(document).ready(function(){
+//DRAG AND DROP SQUARES
+  // $(".makeMeDraggable").draggable({
+  //   containment: '.container',
+  //   snap: '.cell, .makeMeDraggable',
+  //   snapMode: 'outter'
+  // });
+  // $(".makeMeDroppable").droppable({
+  //   drop: handleDropEvent
+  // });
+  // function handleDropEvent(event, ui) {
+  //   var draggable = ui.draggable;
+  //   console.log('The tile ' + $(".makeMeDraggable").draggable(0).attr('id') + ' is now in "' + $(this).droppable(0).attr('id') + '" square')
+  // };
+  $("div.makeMeDraggable").draggable( {
+    opacity: .4,
+    create: function(){
+      $(this).data('position',$(this).position())
+    },
+    cursorAt: {left:15},
+    cursor: 'move',
+    start: function(){
+      $(this).stop(true,true)
+      console.log("DRAGGABLE")
+    }
+  });
+
+  $('div.row').find('.cell').droppable({
+    drop:function(event, ui){
+       snapToMiddle(ui.draggable,$(this));
+       console.log("DROPPABLE");
+    }
+  });
+
+  function snapToMiddle(dragger, target){
+    // debugger;
+    var offset = target.offset();
+    var topMove = (target.outerHeight(true) - dragger.outerHeight(true)) / 2;
+    var leftMove= (target.outerWidth(true) - dragger.outerWidth(true)) / 2;
+    dragger.offset({ top: topMove + offset.top, left: leftMove + offset.left });
+  };
+
+//TILE BAG USER INTERFACE
+  $(".clickable img").click(function(){
+    console.log("MOAR TILES");
+  });
+
+//PLAYER BUTTON INPUT
+  $("button#score").click(function(){
+    console.log("SCORE!");
+  });
+
+  $("button#reset").click(function(){
+    console.log("RESET");
+  });
+
+  $("button#pass").click(function(){
+    console.log("PASS");
+  });
+});

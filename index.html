@@ -10,30 +10,8 @@
     <script src="js/bag.json"></script>
     <script src="js/scripts.js"></script>
 
-<!-- JQUERY DRAG TEST -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
-
-    <script type="text/javascript">
-      $(init);
-
-      function init() {
-        $(".makeMeDraggable").draggable({
-          containment: '.container',
-          snap: '.cell',
-          // stop: handleDragStop
-        });
-        $(".makeMeDroppable").droppable({
-          drop: handleDropEvent
-        });
-      };
-
-      function handleDropEvent(event, ui) {
-        var draggable = ui.draggable;
-        console.log('The tile ' + $(".makeMeDraggable").draggable(0).attr('id') + ' is now in "' + $(this).droppable(0).attr('id') + '" square')
-      }
-    </script>
-<!-- END DRAG TEST -->
 
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> -->
   	<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"> -->

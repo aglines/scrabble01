@@ -72,10 +72,13 @@ p, ol li{
 
 .game-board {
   margin: 10px 20px;
-  padding: 0;
   float: left;
   background-image: url("../img/board-bckgrnd.png");
   background-size: 100% 100%;
+}
+
+.row {
+  padding: 0;
 }
 
 .cell {
