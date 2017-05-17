@@ -119,6 +119,7 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
 };
 
 Game.prototype.completeVerticalWord = function (partialWord) {
+  debugger;
   var completeWord = [];
   var xCoord = partialWord[0].x;
   var firstY = partialWord[0].y;
@@ -170,7 +171,6 @@ Player.prototype.refillRack = function (initialBag) {
     initialBag.splice(currentRandomInt, 1);
   };
 }
-
 
 
 Game.prototype.checkHorizontalPosition = function () {
@@ -335,8 +335,11 @@ $(document).ready(function(){
 //PLAYER BUTTON INPUT
   $("button#score").click(function(){
     // console.log("SCORE!");
-    console.log(scrabbleGame.checkVerticalPosition());
-    console.log(scrabbleGame.checkHorizontalPosition());
+    console.log("Vertical", scrabbleGame.checkVerticalPosition());
+    console.log("Horizontal", scrabbleGame.checkHorizontalPosition());
+    if (scrabbleGame.checkVerticalPosition()) {
+      scrabbleGame.completeVerticalWord(scrabbleGame.currentPlayer.partialWord);
+    }
 
 
   });
