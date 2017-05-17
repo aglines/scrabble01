@@ -163,6 +163,10 @@ p, ol li{
   text-align: center;
 }
 
+#playerOneRack .cell {
+  border: 1px solid #000;
+}
+
 #playerTwoRack {
   display: none;
   margin-top: 5px;
@@ -190,7 +194,7 @@ p, ol li{
   background: url("../img/rack.png");
 }
 
-.draggable {
+.tile {
   width: 48px;
   height: 48px;
   cursor: move;
@@ -200,6 +204,6 @@ p, ol li{
   background-image: url(../img/traditional-tile.png);
 }
 
-.draggable.ui-draggable-dragging {
+.tile.ui-draggable-dragging {
   box-shadow: 10px 10px 5px #888;
 }

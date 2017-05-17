@@ -285,8 +285,7 @@ $(document).ready(function(){
     var currentPlayer = scrabbleGame.currentPlayer;
     currentPlayer.refillRack(initialBag);
     for(i=0; i <= currentPlayer.rack.length-1; i++){
-      $("#playerOneRack").append("<div class='draggable letter" + currentPlayer.rack[i].letter + "' id='" + currentPlayer.rack[i].id + "'>" + currentPlayer.rack[i].letter + '<span class="subscript">' + currentPlayer.rack[i].letterValue.sub() + '</span>' + "</div></div>");
-      console.log();
+      $("#15-0" + i).append("<div class='draggable tile letter" + currentPlayer.rack[i].letter + "' id='" + currentPlayer.rack[i].id + "'>" + currentPlayer.rack[i].letter + '<span class="subscript">' + currentPlayer.rack[i].letterValue.sub() + '</span>' + "</div></div>");
     }
     $(".draggable").draggable();
   });
@@ -307,6 +306,7 @@ $(document).ready(function(){
     drop:function(event, ui){
       snapToMiddle(ui.draggable,$(this));
       console.log(ui.draggable);
+
       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
       console.log(inputCellTileString);
 
@@ -314,14 +314,23 @@ $(document).ready(function(){
       var cellXAxis = parseInt(inputCellTileString[1]);
       var cellScoreVariant = inputCellTileString[2];
       var tileId = $(ui.draggable)[0].id;
-      var chosenTile = scrabbleGame.currentPlayer.getTilebyId(tileId);
 
-      scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
-      scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
+      var chosenTile = scrabbleGame.currentPlayer.getTileforCell(tileId);
+      if ((cellYAxis <= 14) && (cellXAxis <= 14)) {
+        scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
+        scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
+        console.log(scrabbleGame.board[cellYAxis][cellXAxis]);
+        $(".draggable").draggable(disable);
+      }
+      else{
+      }
+      // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
 
-      scrabbleGame.currentPlayer.buildPartialWord(scrabbleGame.board[cellYAxis][cellXAxis]);
-      console.log(scrabbleGame.currentPlayer);
-      console.log(scrabbleGame.currentPlayer.partialWord);
+      // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
+
+      // console.log("The cell is occupied on the y axis at: " + cellYAxis);
+      // console.log("The cell is occupied on the x axis at: " + cellXAxis);
+      // console.log("The cell has a score variant of: " + cellScoreVariant);
     }
   });
 
