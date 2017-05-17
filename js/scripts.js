@@ -246,6 +246,19 @@ Game.prototype.startNewGame = function () {
   var playerOne = new Player ("Jarry");
   this.currentPlayer = playerOne;
 };
+Game.prototype.checkEndGame = function () {
+  var emptyRack;
+  for (var i = 0; i < this.players.length; i++) {
+    if (this.players[i].rack.length<=0) {
+      emptyRack = true;
+    }
+  }
+  if (this.board.length<=0 && emptyRack) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 //===========================================================================
 
