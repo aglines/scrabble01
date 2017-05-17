@@ -149,7 +149,14 @@ Game.prototype.completeVerticalWord = function (partialWord) {
 
 Player.prototype.buildPartialWord = function (cell) {
   this.partialWord.push(cell);
-  this.getTilebyId(cell.tile.id);
+  this.removeTilefromRack(cell)
+};
+
+Player.prototype.removeTilefromRack = function (cell) {
+  var index = this.rack.indexOf(this.getTilebyId(cell.tile.id));
+  if (index >= 0) {
+  this.rack.splice(index, 1);
+  }
 };
 
 Player.prototype.playerScore = function (wordScore) {
@@ -310,13 +317,13 @@ $(document).ready(function(){
       var cellXAxis = parseInt(inputCellTileString[1]);
       var cellScoreVariant = inputCellTileString[2];
       var tileId = $(ui.draggable)[0].id;
-      var chosenTile = scrabbleGame.currentPlayer.getTileforCell(tileId);
+      var chosenTile = scrabbleGame.currentPlayer.getTilebyId(tileId);
 
       scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
       scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
 
       scrabbleGame.currentPlayer.buildPartialWord(scrabbleGame.board[cellYAxis][cellXAxis]);
-      scrabbleGame.currentPlayer.
+      console.log(scrabbleGame.currentPlayer);
       console.log(scrabbleGame.currentPlayer.partialWord);
       // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
 
