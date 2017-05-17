@@ -6,6 +6,12 @@ var initialBag = JSON.parse(bag);
 // test dictionary
 var dictionary = ["cat", "tree", "rain", "wind"];
 
+function getRandomInt(min, max) {
+min = Math.ceil(min);
+max = Math.floor(max);
+return Math.floor(Math.random() * (max - min)) + min;
+};
+
 function Bag() {
   this.bagTiles = initialBag;
 };
@@ -29,10 +35,10 @@ function Tile() {
   this.letterValue;
 };
 
-function Cell(x, y, pointMultiplier, tile) {
+function Cell(x, y) {
   this.x = x;
   this.y = y;
-  this.pointMultiplier = pointMultiplier;
+  this.pointMultiplier;
   this.occupied = false;
   this.tile = {};
 }
@@ -67,19 +73,18 @@ Game.prototype.Turn = function (player) {
 }; // TURN function
 
 
-// Player.prototype.buildWordSection = function (cell) {
-//   this.partialWord.push(cell);
-// };
 
 Game.prototype.generateBoard = function () {
+
   for (var i = 0; i < 15; i++) {
+    var array = [];
     for (var j = 0; j < 15; j++) {
       var cell = new Cell (i, j)
-      this.board.push(cell);
+      array.push(cell);
     }
+    this.board.push(array);
   }
 };
-
 
 Game.prototype.completeHorizontalWord = function (partialWord) {
   var completeWord = [];
@@ -102,7 +107,6 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
     completeWord.unshift(horizontal[firstX-1]);
     firstX--;
   }
-
   // Check the end of horiz array to see if empty
 
   while ((lastX+1<=14)&& (typeof horizontal[lastX+1].tile != 'undefined')) {
@@ -129,7 +133,7 @@ Game.prototype.completeVerticalWord = function (partialWord) {
       return false;
     }
   }
-  debugger;
+
   // Check the beginning of horiz array to see if empty
   // also check if we're at the edge of the board
   while ( (firstY-1)>=0 && (typeof vertical[firstY-1].tile != 'undefined')) {
@@ -235,18 +239,9 @@ Game.prototype.countScore = function() {
   return currentWordScore;
 };
 
-function getRandomInt(min, max) {
-min = Math.ceil(min);
-max = Math.floor(max);
-return Math.floor(Math.random() * (max - min)) + min;
-};
+
 
 //===========================================================================
-
-
-
-
-
 
 
 
@@ -301,15 +296,12 @@ $(document).ready(function(){
       var cellYAxis = parseInt(inputCellTileString[0]);
       var cellXAxis = parseInt(inputCellTileString[1]);
       var cellScoreVariant = inputCellTileString[2];
-
       var tileId = $(ui.draggable)[0].id;
-  
-      console.log(this);
-      // debugger;
       var chosenTile = scrabbleGame.currentPlayer.rack.getTileforCell(tileId);
-      console.log(chosenTile);
-      var newCell = new Cell(cellXAxis, cellYAxis, cellScoreVariant);
-      console.log(newCell);
+      var newCell = new Cell(cellXAxis, cellYAxis, cellScoreVariant, chosenTile);
+
+      console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
+
       // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
 
       // console.log("The cell is occupied on the y axis at: " + cellYAxis);
