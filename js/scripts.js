@@ -65,6 +65,7 @@ Game.prototype.turn = function (player) {
     this.currentPlayer.currentWord = this.completeHorizontalWord(this.currentPlayer.partialWord);
     console.log(this.currentPlayer.currentWord);
   }
+
   // debugger;
 
   if (this.checkValidWord()) {
@@ -72,6 +73,7 @@ Game.prototype.turn = function (player) {
   }
 
   // console.log(this.currentPlayer.countScore());
+
 
 };
 
@@ -288,6 +290,7 @@ $(document).ready(function(){
 
 //TILE BAG USER INTERFACE
   $("#start").click(function(){
+    $(this).hide();
     var currentPlayer = scrabbleGame.currentPlayer;
     currentPlayer.refillRack(initialBag);
     for(i=0; i <= currentPlayer.rack.length-1; i++){
@@ -353,8 +356,8 @@ $(document).ready(function(){
   $("button#score").click(function(){
     // console.log("SCORE!");
     scrabbleGame.turn();
-
-
+    console.log(scrabbleGame.turn());
+    $("#playerScore").append("<p>Your score is: " + scrabbleGame.turn() + "</p>");
   });
 
   $("button#reset").click(function(){
