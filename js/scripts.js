@@ -73,7 +73,7 @@ Game.prototype.turn = function (player) {
   }
 
   // console.log(this.currentPlayer.countScore());
-
+  return this.currentPlayer.countScore();
 
 };
 
