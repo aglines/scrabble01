@@ -37,9 +37,9 @@ function Tile() {
   this.letterValue;
 };
 
-function Cell(x, y) {
-  this.x = x;
+function Cell(y, x) {
   this.y = y;
+  this.x = x;
   this.pointMultiplier;
   this.occupied = false;
   this.tile = {};
@@ -50,7 +50,7 @@ function Cell(x, y) {
 //   this.needNumber = 7;
 // };
 
-Player.prototype.getTileforCell = function (tileId) {
+Player.prototype.getTilebyId = function (tileId) {
   for (var i = 0; i < this.rack.length; i++) {
    if (this.rack[i].id === tileId) {
      return this.rack[i];
@@ -73,7 +73,6 @@ Game.prototype.Turn = function (player) {
   }
 
 }; // TURN function
-
 
 
 Game.prototype.generateBoard = function () {
@@ -120,6 +119,7 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
 };
 
 Game.prototype.completeVerticalWord = function (partialWord) {
+  debugger;
   var completeWord = [];
   var xCoord = partialWord[0].x;
   var firstY = partialWord[0].y;
@@ -129,7 +129,7 @@ Game.prototype.completeVerticalWord = function (partialWord) {
   // because a user might not drop in a straightforward order
 
   for (var i = firstY; i <= lastY; i++) {
-    if (typeof this.board[i][xCoord].tile != 'undefined') {
+    if (typeof this.board[i][xCoord].tile.id != "") {
       completeWord.push(this.board[i][xCoord]);
     } else {
       return false;
@@ -149,6 +149,15 @@ Game.prototype.completeVerticalWord = function (partialWord) {
 
 Player.prototype.buildPartialWord = function (cell) {
   this.partialWord.push(cell);
+  this.removeTilefromRack(cell);
+
+};
+
+Player.prototype.removeTilefromRack = function (cell) {
+  var index = this.rack.indexOf(this.getTilebyId(cell.tile.id));
+  if (index >= 0) {
+  this.rack.splice(index, 1);
+  }
 };
 
 Player.prototype.playerScore = function (wordScore) {
@@ -164,16 +173,12 @@ Player.prototype.refillRack = function (initialBag) {
   };
 }
 
-Game.prototype.checkForEndGame = function () {
-  if (true) {
-  }
-};
 
 Game.prototype.checkVerticalPosition = function () {
   var checkVertical;
   for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
 
-    if ([i].x === [i+1].x) {
+    if (this.currentPlayer.partialWord[i].x === this.currentPlayer.partialWord[i+1].x) {
       checkVertical = true;
     } else {
       checkVertical = false;
@@ -183,11 +188,13 @@ Game.prototype.checkVerticalPosition = function () {
 };
 
 Game.prototype.checkHorizontalPosition = function () {
+  debugger;
   var checkHorizontal;
-
+  console.log(this.currentPlayer.partialWord);
   for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
-
-    if ([i].y === [i+1].y) {
+    // console.log(this.currentPlayer.partialWord[i].x);
+    // console.log(this.currentPlayer.partialWord[i+1].x);
+    if (this.currentPlayer.partialWord[i].y === this.currentPlayer.partialWord[i+1].y) {
       checkHorizontal = true;
     } else {
       checkHorizontal = false;
@@ -246,6 +253,19 @@ Game.prototype.startNewGame = function () {
   var playerOne = new Player ("Jarry");
   this.currentPlayer = playerOne;
 };
+Game.prototype.checkEndGame = function () {
+  var emptyRack;
+  for (var i = 0; i < this.players.length; i++) {
+    if (this.players[i].rack.length<=0) {
+      emptyRack = true;
+    }
+  }
+  if (initialBag.length<=0 && emptyRack) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 //===========================================================================
 
@@ -291,7 +311,7 @@ $(document).ready(function(){
     drop:function(event, ui){
       snapToMiddle(ui.draggable,$(this));
       console.log(ui.draggable);
-      console.log($(this));
+
       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
       console.log(inputCellTileString);
 
@@ -299,14 +319,18 @@ $(document).ready(function(){
       var cellXAxis = parseInt(inputCellTileString[1]);
       var cellScoreVariant = inputCellTileString[2];
       var tileId = $(ui.draggable)[0].id;
-      var chosenTile = scrabbleGame.currentPlayer.getTileforCell(tileId);
+
+      var chosenTile = scrabbleGame.currentPlayer.getTilebyId(tileId);
 
       if ((cellYAxis <= 14) && (cellXAxis <= 14)) {
         scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
         ui.draggable.removeClass("ui-draggable-dragging");
         scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
         console.log(scrabbleGame.board[cellYAxis][cellXAxis]);
+
         ui.draggable.draggable('destroy');
+
+        scrabbleGame.currentPlayer.buildPartialWord(scrabbleGame.board[cellYAxis][cellXAxis]);
       }
       // else if ((cellYAxis >= 15) || (cellXAxis >= 15)){
       //   ui.draggable.draggable('dont destroy');
@@ -334,6 +358,11 @@ $(document).ready(function(){
 //PLAYER BUTTON INPUT
   $("button#score").click(function(){
     // console.log("SCORE!");
+    console.log("Vertical", scrabbleGame.checkVerticalPosition());
+    console.log("Horizontal", scrabbleGame.checkHorizontalPosition());
+    if (scrabbleGame.checkVerticalPosition()) {
+      scrabbleGame.completeVerticalWord(scrabbleGame.currentPlayer.partialWord);
+    }
 
   });
 
