@@ -12,12 +12,6 @@
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"> -->
-  	<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script src="assets/javascript/game.js"></script> -->
     <link rel="icon" href="img/scrabbleLogo.png" type="image">
     <title>Scrabble</title>
   </head>
@@ -281,9 +275,9 @@
                 <div class="col-xs-1 cell makeMeDroppable" id="12-03"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="12-04"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="12-05"></div>
-                <div class="col-xs-1 cell makeMeDroppable" id="12-06"></div>
+                <div class="col-xs-1 cell makeMeDroppable" id="12-06-2L"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="12-07"></div>
-                <div class="col-xs-1 cell makeMeDroppable" id="12-08"></div>
+                <div class="col-xs-1 cell makeMeDroppable" id="12-08-2L"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="12-09"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="12-10"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="12-11"></div>
@@ -314,7 +308,7 @@
                 <div class="col-xs-1 cell makeMeDroppable" id="14-00-3W"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-01"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-02"></div>
-                <div class="col-xs-1 cell makeMeDroppable" id="14-03"></div>
+                <div class="col-xs-1 cell makeMeDroppable" id="14-03-2L"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-04"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-05"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-06"></div>
@@ -322,17 +316,26 @@
                 <div class="col-xs-1 cell makeMeDroppable" id="14-08"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-09"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-10"></div>
-                <div class="col-xs-1 cell makeMeDroppable" id="14-11"></div>
+                <div class="col-xs-1 cell makeMeDroppable" id="14-11-2L"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-12"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-13"></div>
                 <div class="col-xs-1 cell makeMeDroppable" id="14-14-3W"></div>
               </div>
             </div>
           </div>
-          <div id="tileBag">
-            <h4>CLICK ME TO START</h4>
-            <span class="clickable"><img src="img/scrabbleBag.png" alt="Tile Bag"></span>
+          <div id="start">
+            <span class="clickable start"><img src="img/startGraphic.png" width="250px" alt=""></span>
+            <div id="playerNumbers">
+              <p>Number of players</p>
+              <button id="1player" type="button" name="score">1</button>
+              <button id="2player" type="button" name="reset">2</button>
+              <button id="3player" type="button" name="pass">3</button>
+              <button id="4player" type="button"name=" pass">4</button>
+            </div>
           </div>
+          <div id="tileBag">
+          <span class="clickable refill"><img src="img/scrabbleBag.png" alt="Tile Bag"></span>
+        </div>
           <div id="playerScore">
 
           </div>
