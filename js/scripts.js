@@ -28,7 +28,7 @@ function Player(name) {
   this.rack = [];
   this.partialWord = [];
   this.currentWord = [];
-  this.refillRack(initialBag);
+
 };
 
 function Tile() {
@@ -120,31 +120,28 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
 };
 
 Game.prototype.completeVerticalWord = function (partialWord) {
-
   var completeWord = [];
-  var vertical = this.board[partialWord[0].x]; //take whole vertical array
+  var xCoord = partialWord[0].x;
   var firstY = partialWord[0].y;
   var lastY = partialWord[partialWord.length-1].y;
 
   // TODO: sort (cells) partialWord array
   // because a user might not drop in a straightforward order
 
-  for (var i = partialWord[0].y; i <=partialWord[partialWord.length].y; i++) {
-    if (typeof vertical[i].tile != 'undefined') {
-      completeWord.push(vertical[i]);
+  for (var i = firstY; i <= lastY; i++) {
+    if (typeof this.board[i][xCoord].tile != 'undefined') {
+      completeWord.push(this.board[i][xCoord]);
     } else {
       return false;
     }
   }
 
-  // Check the beginning of horiz array to see if empty
-  // also check if we're at the edge of the board
-  while ( (firstY-1)>=0 && (typeof vertical[firstY-1].tile != 'undefined')) {
-    completeWord.unshift(vertical[firstY-1]);
+  while ( (firstY-1)>=0 && (typeof this.board[firstY-1][xCoord].tile != 'undefined')) {
+    completeWord.unshift(this.board[firstY-1][xCoord]);
     firstY--;
   }
-  while ( (lastY+1<=14) && (typeof vertical[lastY+1].tile != 'undefined')) {
-    completeWord.push(horizontal[lastY+1]);
+  while ( (lastY+1<=14) && (typeof this.board[firstY+1][xCoord].tile != 'undefined')) {
+    completeWord.push(this.board[firstY+1][xCoord]);
     lastY++;
   }
   return completeWord;
@@ -244,10 +241,14 @@ Game.prototype.countScore = function() {
 };
 
 Game.prototype.startNewGame = function () {
-
+  this.generateBoard();
+  var playerOne = new Player ("Tom");
+  var playerOne = new Player ("Jarry");
+  this.currentPlayer = playerOne;
 };
 
 //===========================================================================
+
 
 
 
@@ -261,25 +262,15 @@ Game.prototype.startNewGame = function () {
 
 $(document).ready(function(){
     var scrabbleGame = new Game();
-    scrabbleGame.generateBoard();
-    console.log(scrabbleGame);
-
-    var playerOne = new Player ("Tom");
-    console.log(playerOne);
-
-    // var newPlayerRack = new Rack();
-    // // var playerTwo = new Player ("Mary", newPlayerRack);
-    //
-    // scrabbleGame.currentPlayer = playerOne;
+    scrabbleGame.startNewGame();
 
 
 //TILE BAG USER INTERFACE
   $(".clickable img").click(function(){
-    // var newPlayerRack = new Rack();
-    newPlayerRack.generateRack(7, initialBag);
-    for(i=0; i <= newPlayerRack.rackTiles.length-1; i++){
-
-      $("#playerOneRack").append("<div class='draggable letter" + newPlayerRack.rackTiles[i].letter + "' id='" + newPlayerRack.rackTiles[i].id + "'>" + newPlayerRack.rackTiles[i].letter + '<span class="subscript">' + newPlayerRack.rackTiles[i].letterValue.sub() + '</span>' + "</div></div>");
+    var currentPlayer = scrabbleGame.currentPlayer;
+    currentPlayer.refillRack(initialBag);
+    for(i=0; i <= currentPlayer.rack.length-1; i++){
+      $("#playerOneRack").append("<div class='draggable letter" + currentPlayer.rack[i].letter + "' id='" + currentPlayer.rack[i].id + "'>" + currentPlayer.rack[i].letter + '<span class="subscript">' + currentPlayer.rack[i].letterValue.sub() + '</span>' + "</div></div>");
       console.log();
     }
     $(".draggable").draggable();
@@ -307,10 +298,13 @@ $(document).ready(function(){
       var cellXAxis = parseInt(inputCellTileString[1]);
       var cellScoreVariant = inputCellTileString[2];
       var tileId = $(ui.draggable)[0].id;
-      var chosenTile = scrabbleGame.currentPlayer.rack.getTileforCell(tileId);
-      var newCell = new Cell(cellXAxis, cellYAxis, cellScoreVariant, chosenTile);
+      var chosenTile = scrabbleGame.currentPlayer.getTileforCell(tileId);
 
-      console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
+      scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
+      scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
+
+      console.log(scrabbleGame.board[cellYAxis][cellXAxis]);
+      // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
 
       // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
 
@@ -330,7 +324,7 @@ $(document).ready(function(){
 //PLAYER BUTTON INPUT
   $("button#score").click(function(){
     // console.log("SCORE!");
-    scrabbleGame.countScore();
+
   });
 
   $("button#reset").click(function(){
