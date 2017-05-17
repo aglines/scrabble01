@@ -75,7 +75,6 @@ Game.prototype.Turn = function (player) {
 }; // TURN function
 
 
-
 Game.prototype.generateBoard = function () {
   this.board = [];
   for (var i = 0; i < 15; i++) {
@@ -174,31 +173,29 @@ Player.prototype.refillRack = function (initialBag) {
 
 
 
-Game.prototype.checkVerticalPosition = function () {
-  var checkVertical;
-  for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
-
-    if ([i].x === [i+1].x) {
-      checkVertical = true;
-    } else {
-      checkVertical = false;
-    }
-  }
-  return checkVertical;
-};
-
 Game.prototype.checkHorizontalPosition = function () {
+  // debugger;
   var checkHorizontal;
-
   for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
-
-    if ([i].y === [i+1].y) {
+    if (this.currentPlayer.partialWord[i].x === this.currentPlayer.partialWord[i+1].x) {
       checkHorizontal = true;
     } else {
       checkHorizontal = false;
     }
   }
   return checkHorizontal;
+};
+
+Game.prototype.checkVerticalPosition = function () {
+  var checkVertical;
+  for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
+    if (this.currentPlayer.partialWord[i].y === this.currentPlayer.partialWord[i+1].y) {
+      checkVertical = true;
+    } else {
+      checkVertical = false;
+    }
+  }
+  return checkVertical;
 };
 
 Game.prototype.checkValidWord = function () {
@@ -325,13 +322,6 @@ $(document).ready(function(){
       scrabbleGame.currentPlayer.buildPartialWord(scrabbleGame.board[cellYAxis][cellXAxis]);
       console.log(scrabbleGame.currentPlayer);
       console.log(scrabbleGame.currentPlayer.partialWord);
-      // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
-
-      // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
-
-      // console.log("The cell is occupied on the y axis at: " + cellYAxis);
-      // console.log("The cell is occupied on the x axis at: " + cellXAxis);
-      // console.log("The cell has a score variant of: " + cellScoreVariant);
     }
   });
 
@@ -345,6 +335,9 @@ $(document).ready(function(){
 //PLAYER BUTTON INPUT
   $("button#score").click(function(){
     // console.log("SCORE!");
+    console.log(scrabbleGame.checkVerticalPosition());
+    console.log(scrabbleGame.checkHorizontalPosition());
+
 
   });
 
