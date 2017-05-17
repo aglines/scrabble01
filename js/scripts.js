@@ -187,6 +187,7 @@ Game.prototype.checkHorizontalPosition = function () {
 };
 
 Game.prototype.checkVerticalPosition = function () {
+  debugger;
   var checkVertical;
   for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
     if (this.currentPlayer.partialWord[i].y === this.currentPlayer.partialWord[i+1].y) {
@@ -315,12 +316,12 @@ $(document).ready(function(){
       var cellScoreVariant = inputCellTileString[2];
       var tileId = $(ui.draggable)[0].id;
 
-      var chosenTile = scrabbleGame.currentPlayer.getTileforCell(tileId);
+      var chosenTile = scrabbleGame.currentPlayer.getTilebyId(tileId);
       if ((cellYAxis <= 14) && (cellXAxis <= 14)) {
         scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
         scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
         console.log(scrabbleGame.board[cellYAxis][cellXAxis]);
-        $(".draggable").draggable(disable);
+        // $(".draggable").draggable(disable);
       }
       else{
       }
