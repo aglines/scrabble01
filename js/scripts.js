@@ -129,7 +129,7 @@ Game.prototype.completeVerticalWord = function (partialWord) {
   // because a user might not drop in a straightforward order
 
   for (var i = firstY; i <= lastY; i++) {
-    if (typeof this.board[i][xCoord].tile != 'undefined') {
+    if (typeof this.board[i][xCoord].tile.id != "") {
       completeWord.push(this.board[i][xCoord]);
     } else {
       return false;
@@ -200,7 +200,7 @@ Game.prototype.checkHorizontalPosition = function () {
       checkHorizontal = false;
     }
   }
-  return checkVertical;
+  return checkHorizontal;
 };
 
 Game.prototype.checkValidWord = function () {
@@ -351,11 +351,10 @@ $(document).ready(function(){
   $("button#score").click(function(){
     // console.log("SCORE!");
     console.log("Vertical", scrabbleGame.checkVerticalPosition());
-    // console.log("Horizontal", scrabbleGame.checkHorizontalPosition());
-    // if (scrabbleGame.checkVerticalPosition()) {
-    //   scrabbleGame.completeVerticalWord(scrabbleGame.currentPlayer.partialWord);
-    // }
-
+    console.log("Horizontal", scrabbleGame.checkHorizontalPosition());
+    if (scrabbleGame.checkVerticalPosition()) {
+      scrabbleGame.completeVerticalWord(scrabbleGame.currentPlayer.partialWord);
+    }
 
   });
 
