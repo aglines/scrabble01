@@ -19,14 +19,16 @@ function Bag() {
 function Game() {
   this.board = [];
   this.currentPlayer = {};
+  this.players = [];
 };
 
-function Player(name, rack) {
+function Player(name) {
   this.name = name;
   this.score = 0;
-  this.rack = rack;
+  this.rack = [];
   this.partialWord = [];
   this.currentWord = [];
+  this.refillRack(initialBag);
 };
 
 function Tile() {
@@ -43,15 +45,15 @@ function Cell(x, y) {
   this.tile = {};
 }
 
-function Rack() {
-  this.rackTiles = [];
-  this.needNumber = 7;
-};
+// function Rack() {
+//   this.rackTiles = [];
+//   this.needNumber = 7;
+// };
 
-Rack.prototype.getTileforCell = function (tileId) {
-  for (var i = 0; i < this.rackTiles.length; i++) {
-   if (this.rackTiles[i].id === tileId) {
-     return this.rackTiles[i];
+Player.prototype.getTileforCell = function (tileId) {
+  for (var i = 0; i < this.rack.length; i++) {
+   if (this.rack[i].id === tileId) {
+     return this.rack[i];
    }
   }
 };
@@ -75,7 +77,7 @@ Game.prototype.Turn = function (player) {
 
 
 Game.prototype.generateBoard = function () {
-
+  this.board = [];
   for (var i = 0; i < 15; i++) {
     var array = [];
     for (var j = 0; j < 15; j++) {
@@ -85,6 +87,7 @@ Game.prototype.generateBoard = function () {
     this.board.push(array);
   }
 };
+
 
 Game.prototype.completeHorizontalWord = function (partialWord) {
   var completeWord = [];
@@ -155,10 +158,11 @@ Player.prototype.playerScore = function (wordScore) {
   return this.score += wordScore;
 };
 
-Rack.prototype.generateRack = function (needNumber,initialBag) {
+Player.prototype.refillRack = function (initialBag) {
+  var needNumber = 7-this.rack.length;
   for (var i = 0; i < needNumber; i++) {
     var currentRandomInt = getRandomInt(0, initialBag.length-1);
-    this.rackTiles.push(initialBag[currentRandomInt]);
+    this.rack.push(initialBag[currentRandomInt]);
     initialBag.splice(currentRandomInt, 1);
   };
 }
@@ -239,7 +243,9 @@ Game.prototype.countScore = function() {
   return currentWordScore;
 };
 
+Game.prototype.startNewGame = function () {
 
+};
 
 //===========================================================================
 
@@ -256,11 +262,15 @@ Game.prototype.countScore = function() {
 $(document).ready(function(){
     var scrabbleGame = new Game();
     scrabbleGame.generateBoard();
-    var newPlayerRack = new Rack();
-    var playerOne = new Player ("Tom", newPlayerRack);
-    // var playerTwo = new Player ("Mary", newPlayerRack);
+    console.log(scrabbleGame);
 
-    scrabbleGame.currentPlayer = playerOne;
+    var playerOne = new Player ("Tom");
+    console.log(playerOne);
+
+    // var newPlayerRack = new Rack();
+    // // var playerTwo = new Player ("Mary", newPlayerRack);
+    //
+    // scrabbleGame.currentPlayer = playerOne;
 
 
 //TILE BAG USER INTERFACE
