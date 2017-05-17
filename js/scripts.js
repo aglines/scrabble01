@@ -63,7 +63,7 @@ Game.prototype.turn = function (player) {
     console.log(this.currentPlayer.currentWord);
   }
   console.log(this.currentPlayer.countScore());
-
+  return(this.currentPlayer.countScore());
 };
 
 Game.prototype.switchPlayer = function () {
@@ -276,6 +276,7 @@ $(document).ready(function(){
 
 //TILE BAG USER INTERFACE
   $("#start").click(function(){
+    $(this).hide();
     var currentPlayer = scrabbleGame.currentPlayer;
     currentPlayer.refillRack(initialBag);
     for(i=0; i <= currentPlayer.rack.length-1; i++){
@@ -341,8 +342,8 @@ $(document).ready(function(){
   $("button#score").click(function(){
     // console.log("SCORE!");
     scrabbleGame.turn();
-
-
+    console.log(scrabbleGame.turn());
+    $("#playerScore").append("<p>Your score is: " + scrabbleGame.turn() + "</p>");
   });
 
   $("button#reset").click(function(){
