@@ -63,6 +63,7 @@ Game.prototype.turn = function (player) {
     console.log(scrabbleGame.currentPlayer.currentWord);
   }
   console.log(scrabbleGame.currentPlayer.countScore());
+
 };
 
 Game.prototype.switchPlayer = function () {
