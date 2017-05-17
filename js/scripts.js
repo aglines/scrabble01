@@ -275,7 +275,7 @@ $(document).ready(function(){
 
 
 //TILE BAG USER INTERFACE
-  $(".clickable").click(function(){
+  $("#start").click(function(){
     var currentPlayer = scrabbleGame.currentPlayer;
     currentPlayer.refillRack(initialBag);
     for(i=0; i <= currentPlayer.rack.length-1; i++){
