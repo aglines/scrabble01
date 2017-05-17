@@ -310,14 +310,22 @@ $(document).ready(function(){
       var tileId = $(ui.draggable)[0].id;
 
       var chosenTile = scrabbleGame.currentPlayer.getTilebyId(tileId);
+
       if ((cellYAxis <= 14) && (cellXAxis <= 14)) {
         scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
+        ui.draggable.removeClass("ui-draggable-dragging");
         scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
         console.log(scrabbleGame.board[cellYAxis][cellXAxis]);
+
+        ui.draggable.draggable('destroy');
+
         scrabbleGame.currentPlayer.buildPartialWord(scrabbleGame.board[cellYAxis][cellXAxis]);
-        // $(".draggable").draggable(disable);
       }
+      // else if ((cellYAxis >= 15) || (cellXAxis >= 15)){
+      //   ui.draggable.draggable('dont destroy');
+      // }
       else{
+        console.log("failing xomg");
       }
     }
   });
