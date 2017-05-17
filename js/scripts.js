@@ -45,11 +45,6 @@ function Cell(y, x) {
   this.tile = {};
 }
 
-// function Rack() {
-//   this.rackTiles = [];
-//   this.needNumber = 7;
-// };
-
 Player.prototype.getTilebyId = function (tileId) {
   for (var i = 0; i < this.rack.length; i++) {
    if (this.rack[i].id === tileId) {
@@ -58,22 +53,25 @@ Player.prototype.getTilebyId = function (tileId) {
   }
 };
 
-Game.prototype.Turn = function (player) {
-  this.currentPlayer = player;
-
-    if (this.checkHorizontalPosition()) {
-            this.completeHorizontalWord(this.currentPlayer.partialWord);
-    }
-    if (this.checkVerticalPosition()) {
-      this.completeVerticalWord(this.currentPlayer.partialWord);
-    }
-  if ( this.checkValidWord(this.currentPlayer.completeWord)) {
-      countScore();
-      console.log(countScore());
+Game.prototype.turn = function (player) {
+  if (scrabbleGame.checkVerticalPosition()) {
+    scrabbleGame.currentPlayer.currentWord = scrabbleGame.completeVerticalWord(scrabbleGame.currentPlayer.partialWord);
+    console.log(scrabbleGame.currentPlayer.currentWord);
   }
+  if (scrabbleGame.checkHorizontalPosition()) {
+    scrabbleGame.currentPlayer.currentWord = scrabbleGame.completeHorizontalWord(scrabbleGame.currentPlayer.partialWord);
+    console.log(scrabbleGame.currentPlayer.currentWord);
+  }
+  console.log(scrabbleGame.currentPlayer.countScore());
+};
 
-}; // TURN function
-
+Game.prototype.switchPlayer = function () {
+  if (this.currentPlayer.name === this.players[0].name) {
+    this.currentPlayer = this.players[1];
+  } else {
+    this.currentPlayer = this.players[0];
+  }
+};
 
 Game.prototype.generateBoard = function () {
   this.board = [];
@@ -86,7 +84,6 @@ Game.prototype.generateBoard = function () {
     this.board.push(array);
   }
 };
-
 
 Game.prototype.completeHorizontalWord = function (partialWord) {
   // debugger;
@@ -322,13 +319,6 @@ $(document).ready(function(){
       }
       else{
       }
-      // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
-
-      // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
-
-      // console.log("The cell is occupied on the y axis at: " + cellYAxis);
-      // console.log("The cell is occupied on the x axis at: " + cellXAxis);
-      // console.log("The cell has a score variant of: " + cellScoreVariant);
     }
   });
 
@@ -344,20 +334,8 @@ $(document).ready(function(){
     // console.log("SCORE!");
     console.log("Vertical", scrabbleGame.checkVerticalPosition());
     console.log("Horizontal", scrabbleGame.checkHorizontalPosition());
-    if (scrabbleGame.checkVerticalPosition()) {
-      scrabbleGame.currentPlayer.currentWord = scrabbleGame.completeVerticalWord(scrabbleGame.currentPlayer.partialWord);
-      console.log(scrabbleGame.currentPlayer.currentWord);
-    }
-    if (scrabbleGame.checkHorizontalPosition()) {
-      scrabbleGame.currentPlayer.currentWord = scrabbleGame.completeHorizontalWord(scrabbleGame.currentPlayer.partialWord);
-      console.log(scrabbleGame.currentPlayer.currentWord);
-    }
-    console.log(scrabbleGame.currentPlayer.countScore());
-    if (scrabbleGame.currentPlayer.name === scrabbleGame.players[0].name) {
-      scrabbleGame.currentPlayer = scrabbleGame.players[1];
-    } else {
-      scrabbleGame.currentPlayer = scrabbleGame.players[0];
-    }
+
+
   });
 
   $("button#reset").click(function(){
