@@ -218,7 +218,7 @@ Game.prototype.checkValidWord = function () {
 
 Player.prototype.countScore = function() {
   debugger;
-  var wordScoreMultiplier = 0;
+  var wordScoreMultiplier = 1;
   var currentWordScore = 0;
 
   for (var i = 0; i <= this.currentWord.length-1; i++) {
@@ -238,28 +238,6 @@ Player.prototype.countScore = function() {
   };
   return currentWordScore *= wordScoreMultiplier;
 };
-  //   if (this.currentWord[i].pointMultiplier === "2L") {
-  //     currentWordScore += this.currentWord[i].tile.letterValue * 2
-  //   }
-  //   else if (this.currentWord[i].pointMultiplier === "3L") {
-  //     currentWordScore += this.currentWord[i].tile.letterValue * 3
-  //   }
-  //   else if (this.currentWord[i].pointMultiplier === "2W") {
-  //     currentWordScore += this.currentWord[i].tile.letterValue;
-  //     var wordScoreMultiplier = 2;
-  //   }
-  //   else if (this.currentWord[i].pointMultiplier === "3W") {
-  //     currentWordScore += this.currentWord[i].tile.letterValue;
-  //     var wordScoreMultiplier = 3;
-  //   }
-  //   else {
-  //     currentWordScore += this.currentWord[i].tile.letterValue;
-  //     }
-  // };
-  // currentWordScore *= wordScoreMultiplier;
-//   console.log("currentWordScore = ", currentWordScore);
-//   return currentWordScore;
-// };
 
 Game.prototype.startNewGame = function () {
   this.generateBoard();
@@ -375,7 +353,11 @@ $(document).ready(function(){
       console.log(scrabbleGame.currentPlayer.currentWord);
     }
     console.log(scrabbleGame.currentPlayer.countScore());
-
+    if (scrabbleGame.currentPlayer.name === scrabbleGame.players[0].name) {
+      scrabbleGame.currentPlayer = scrabbleGame.players[1];
+    } else {
+      scrabbleGame.currentPlayer = scrabbleGame.players[0];
+    }
   });
 
   $("button#reset").click(function(){
