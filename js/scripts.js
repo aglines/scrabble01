@@ -54,15 +54,16 @@ Player.prototype.getTilebyId = function (tileId) {
 };
 
 Game.prototype.turn = function (player) {
-  if (scrabbleGame.checkVerticalPosition()) {
-    scrabbleGame.currentPlayer.currentWord = scrabbleGame.completeVerticalWord(scrabbleGame.currentPlayer.partialWord);
-    console.log(scrabbleGame.currentPlayer.currentWord);
+  if (this.checkVerticalPosition()) {
+    this.currentPlayer.currentWord = this.completeVerticalWord(this.currentPlayer.partialWord);
+    console.log(this.currentPlayer.currentWord);
   }
-  if (scrabbleGame.checkHorizontalPosition()) {
-    scrabbleGame.currentPlayer.currentWord = scrabbleGame.completeHorizontalWord(scrabbleGame.currentPlayer.partialWord);
-    console.log(scrabbleGame.currentPlayer.currentWord);
+  if (this.checkHorizontalPosition()) {
+    this.currentPlayer.currentWord = this.completeHorizontalWord(this.currentPlayer.partialWord);
+    console.log(this.currentPlayer.currentWord);
   }
-  console.log(scrabbleGame.currentPlayer.countScore());
+  console.log(this.currentPlayer.countScore());
+
 };
 
 Game.prototype.switchPlayer = function () {
@@ -170,7 +171,6 @@ Player.prototype.refillRack = function (initialBag) {
     initialBag.splice(currentRandomInt, 1);
   };
 }
-
 
 Game.prototype.checkVerticalPosition = function () {
   var checkVertical;
@@ -332,8 +332,7 @@ $(document).ready(function(){
 //PLAYER BUTTON INPUT
   $("button#score").click(function(){
     // console.log("SCORE!");
-    console.log("Vertical", scrabbleGame.checkVerticalPosition());
-    console.log("Horizontal", scrabbleGame.checkHorizontalPosition());
+    scrabbleGame.turn();
 
 
   });
@@ -345,7 +344,13 @@ $(document).ready(function(){
 
   $("button#pass").click(function(){
     var turnType = "pass";
-
     console.log("PASS");
   });
+
+  // $(".refill").click(function () {
+  //   scrabbleGame.currentPlayer.refillRack();
+  //   console.log(scrabbleGame.currentPlayer);
+  // });
+
+
 });
