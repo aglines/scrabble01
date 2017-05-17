@@ -4,7 +4,8 @@ var initialBag = JSON.parse(bag);
 // console.log(initialBag);
 
 // test dictionary
-var dictionary = ["cat", "tree", "rain", "wind"];
+var dictionary = JSON.parse(words);
+// console.log(dictionary[1]);
 
 function getRandomInt(min, max) {
 min = Math.ceil(min);
@@ -55,15 +56,25 @@ Player.prototype.getTilebyId = function (tileId) {
 
 Game.prototype.turn = function (player) {
   if (this.checkVerticalPosition()) {
+    // debugger;
     this.currentPlayer.currentWord = this.completeVerticalWord(this.currentPlayer.partialWord);
     console.log(this.currentPlayer.currentWord);
   }
   if (this.checkHorizontalPosition()) {
+    // debugger;
     this.currentPlayer.currentWord = this.completeHorizontalWord(this.currentPlayer.partialWord);
     console.log(this.currentPlayer.currentWord);
   }
-  console.log(this.currentPlayer.countScore());
-  return(this.currentPlayer.countScore());
+
+  // debugger;
+
+  if (this.checkValidWord()) {
+    console.log("reached checkValidWord");
+  }
+
+  // console.log(this.currentPlayer.countScore());
+
+
 };
 
 Game.prototype.switchPlayer = function () {
@@ -128,7 +139,7 @@ Game.prototype.completeVerticalWord = function (partialWord) {
   // because a user might not drop in a straightforward order
 
   for (var i = firstY; i <= lastY; i++) {
-    if (typeof this.board[i][xCoord].tile != 'undefined') {
+    if (typeof this.board[i][xCoord].tile !== 'undefined') {
       completeWord.push(this.board[i][xCoord]);
     } else {
       return false;
@@ -139,8 +150,9 @@ Game.prototype.completeVerticalWord = function (partialWord) {
     completeWord.unshift(this.board[firstY-1][xCoord]);
     firstY--;
   }
-  while ( (lastY+1<=14) && (typeof this.board[firstY+1][xCoord].tile.id !== 'undefined')) {
+  while ( (lastY+1<=14) && (typeof this.board[lastY+1][xCoord].tile.id !== 'undefined')) {
     completeWord.push(this.board[firstY+1][xCoord]);
+    console.log(this.board[firstY+1][xCoord].tile.id);
     lastY++;
   }
   return completeWord;
@@ -203,18 +215,20 @@ Game.prototype.checkHorizontalPosition = function () {
 
 Game.prototype.checkValidWord = function () {
   var wordString ="";
-
+debugger;
   for (var i = 0; i < this.currentPlayer.currentWord.length; i++) {
     wordString+=this.currentPlayer.currentWord[i].tile.letter;
-    console.log("this.currentPlayer.currentWord[i].tile.letter = ",  this.currentPlayer.currentWord[i].tile.letter);
-
+    // console.log("this.currentPlayer.currentWord[i].tile.letter = ",  this.currentPlayer.currentWord[i].tile.letter);
   }
-  return dictionary.includes(wordString);
+  // console.log(wordString);
+  wordString = wordString.toLowerCase();
+  console.log(dictionary.includes(wordString));
 
+  return dictionary.includes(wordString);
 };
 
 Player.prototype.countScore = function() {
-  debugger;
+  // debugger;
   var wordScoreMultiplier = 1;
   var currentWordScore = 0;
 
