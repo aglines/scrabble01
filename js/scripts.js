@@ -292,7 +292,6 @@ $(document).ready(function(){
       snapToMiddle(ui.draggable,$(this));
       console.log(ui.draggable);
       console.log($(this));
-      // ui.draggable.removeClass("ui-draggable-dragging");
       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
       console.log(inputCellTileString);
 
@@ -301,13 +300,19 @@ $(document).ready(function(){
       var cellScoreVariant = inputCellTileString[2];
       var tileId = $(ui.draggable)[0].id;
       var chosenTile = scrabbleGame.currentPlayer.getTileforCell(tileId);
+
       if ((cellYAxis <= 14) && (cellXAxis <= 14)) {
         scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
+        ui.draggable.removeClass("ui-draggable-dragging");
         scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
         console.log(scrabbleGame.board[cellYAxis][cellXAxis]);
-        $(".draggable").draggable(disable);
+        ui.draggable.draggable('destroy');
       }
+      // else if ((cellYAxis >= 15) || (cellXAxis >= 15)){
+      //   ui.draggable.draggable('dont destroy');
+      // }
       else{
+        console.log("failing xomg");
       }
       // console.log(scrabbleGame.currentPlayer.buildPartialWord(newCell));
 
