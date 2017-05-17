@@ -152,21 +152,29 @@ p, ol li{
 }
 
 #playerNumbers {
-  margin-top: 50px;
+  margin-top: 20px;
   margin-right: 20px;
   line-height: 20px;
   text-align: right;
   float: right;
 }
 
+#playerNumbers button {
+  border-radius: 10px;
+  width: 60px;
+  color: #ffffff;
+  background-color: #003aff;
+}
+
 /*PLAYER RACKS*/
 #playerButtons button {
   border-radius: 10px;
-  width: 75px;
+  width: 60px;
   color: #ffffff;
   background-color: #003aff;
-  text-align: center;
-  margin: 500px 0px 0px 20px;
+  margin: 150px 0px 0px 5px;
+  float: right;
+  margin-right: 20px;
 }
 
 #playerOneRack {
