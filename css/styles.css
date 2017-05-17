@@ -121,12 +121,12 @@ p, ol li{
   width: 300px;
 }
 
-#tileBag h4 {
+/*#tileBag h4 {
   padding: 0;
   text-align: center;
   animation-name: colorFlash;
   animation-duration: 3s;
-  animation-iteration-count: infinite;
+  animation-iteration-count: infinite;*/
 }
 
 #tileBag img {
@@ -137,11 +137,36 @@ p, ol li{
   font-size: 20px;
 }
 
+.btn {
+  border-radius: 10px;
+  width: 75px;
+  color: #ffffff;
+  background-color: #003aff;
+  text-align: center;
+  float: right;
+}
+
+.start {
+  margin-top: 20px;
+  float: right;
+}
+
+#playerNumbers {
+  margin-top: 50px;
+  margin-right: 20px;
+  line-height: 20px;
+  text-align: right;
+  float: right;
+}
+
 /*PLAYER RACKS*/
 #playerButtons button {
-  border-radius: 3px;
-  margin: 380px 0 0 20px;
-  width: 50px;
+  border-radius: 10px;
+  width: 75px;
+  color: #ffffff;
+  background-color: #003aff;
+  text-align: center;
+  margin: 500px 0px 0px 20px;
 }
 
 #playerOneRack {
