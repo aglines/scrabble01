@@ -9,25 +9,36 @@ function getRandomInt(min, max) {
 return Math.floor(Math.random() * (max - min)) + min;
 };
 
+function sortNumber(a,b) {
+    return a - b;
+};
+
 function sortPartialWord(partialWord, isHorizontal) {
+  debugger;
   var arrayOfCoords =[];
   var result = [];
-  for (var i = 0; i < partialWord.length-1; i++) {
+  for (var i = 0; i < partialWord.length; i++) {
     if (isHorizontal) {
       arrayOfCoords.push(partialWord[i].x);
     } else {
       arrayOfCoords.push(partialWord[i].y);
     }
   }
-  arrayOfCoord.sort();
-  for (var i = 0; i < arrayOfCoord.length-1; i++) {
-    if (isHorizontal) {
-      if (partialWord[i].x === arrayOfCoords[i]) {
-        result.push(partialWord[i].x);
-      }
-    } else {
-      if (partialWord[i].y === arrayOfCoords[i]) {
-        result.push(partialWord[i].y);
+
+  arrayOfCoords = arrayOfCoords.sort(sortNumber);
+  for (var i = 0; i < arrayOfCoords.length; i++) {
+    // debugger;
+    for (var j = 0; j < partialWord.length; j++) {
+      // debugger;
+
+      if (isHorizontal) {
+        if (partialWord[j].x === arrayOfCoords[i]) {
+          result.push(partialWord[j]);
+        }
+      } else {
+        if (partialWord[j].y === arrayOfCoords[i]) {
+          result.push(partialWord[j]);
+        }
       }
     }
   };
@@ -130,11 +141,11 @@ Game.prototype.generateBoard = function () {
 Game.prototype.completeHorizontalWord = function (partialWord) {
   // debugger;
   var completeWord = [];
+  partialWord = sortPartialWord(partialWord, true)
   var horizontal = this.board[partialWord[0].y];// take whole horizontal array from board with y coord
   var firstX = partialWord[0].x;
   var lastX = partialWord[partialWord.length-1].x;
-  // TODO: sort (cells) partialWord array
-  // because a user might not drop in a straightforward order
+
   for (var i = partialWord[0].x; i <= partialWord[partialWord.length-1].x; i++) {
     if (typeof horizontal[i].tile !== 'undefined') {
       completeWord.push(horizontal[i]);
@@ -142,7 +153,6 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
       return false;
     }
   }
-  // debugger;
   // Check the beginning of horiz array to see if empty
   // also check if we're at the edge of the board
   while ((firstX-1)>=0 && (typeof horizontal[firstX-1].tile.id !== 'undefined')) {
@@ -150,7 +160,6 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
     firstX--;
   }
   // Check the end of horiz array to see if empty
-
   while ((lastX+1<=14)&& (typeof horizontal[lastX+1].tile.id !== 'undefined')) {
     completeWord.push(horizontal[lastX+1]);
     lastX++;
@@ -160,12 +169,10 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
 
 Game.prototype.completeVerticalWord = function (partialWord) {
   var completeWord = [];
+  partialWord = sortPartialWord(partialWord, false);
   var xCoord = partialWord[0].x;
   var firstY = partialWord[0].y;
   var lastY = partialWord[partialWord.length-1].y;
-
-  // TODO: sort (cells) partialWord array
-  // because a user might not drop in a straightforward order
 
   for (var i = firstY; i <= lastY; i++) {
     if (typeof this.board[i][xCoord].tile !== 'undefined') {
