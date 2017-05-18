@@ -9,6 +9,32 @@ function getRandomInt(min, max) {
 return Math.floor(Math.random() * (max - min)) + min;
 };
 
+function sortPartialWord(partialWord, isHorizontal) {
+  var arrayOfCoords =[];
+  var result = [];
+  for (var i = 0; i < partialWord.length-1; i++) {
+    if (isHorizontal) {
+      arrayOfCoords.push(partialWord[i].x);
+    } else {
+      arrayOfCoords.push(partialWord[i].y);
+    }
+  }
+  arrayOfCoord.sort();
+  for (var i = 0; i < arrayOfCoord.length-1; i++) {
+    if (isHorizontal) {
+      if (partialWord[i].x === arrayOfCoords[i]) {
+        result.push(partialWord[i].x);
+      }
+    } else {
+      if (partialWord[i].y === arrayOfCoords[i]) {
+        result.push(partialWord[i].y);
+      }
+    }
+  };
+  console.log(result);
+  return result;
+};
+
 function Bag() {
   this.bagTiles = initialBag;
 };
@@ -82,8 +108,10 @@ Game.prototype.backTilesToRackFromBoard = function () {
 Game.prototype.switchPlayer = function () {
   if (this.currentPlayer.name === this.players[0].name) {
     this.currentPlayer = this.players[1];
+    console.log(this.currentPlayer);
   } else {
     this.currentPlayer = this.players[0];
+    console.log(this.currentPlayer);
   }
 };
 
@@ -250,9 +278,10 @@ Player.prototype.getTurnScore = function() {
 
 Game.prototype.startNewGame = function () {
   this.generateBoard();
-  var playerOne = new Player ("Tom");
-  var playerOne = new Player ("Jarry");
-  this.currentPlayer = playerOne;
+  this.players.push(new Player ("Tom"));
+  this.players.push(new Player ("Jerry"));
+
+  this.currentPlayer = this.players[0];
 };
 
 Game.prototype.checkEndGame = function () {
@@ -355,6 +384,7 @@ $(document).ready(function(){
 $("#refill").click(function () {
   scrabbleGame.currentPlayer.refillRack(initialBag);
   console.log(scrabbleGame.currentPlayer.rack);
+  scrabbleGame.switchPlayer();
 });
 
 //PLAYER BUTTON INPUT
