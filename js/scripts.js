@@ -373,7 +373,8 @@ $(document).ready(function(){
   $("#start").click(function(){
     $(this).hide();
     $(".showDuringGamePlay").show();
-
+    $("#refill").show();
+    $("#player1Rack").show();
     scrabbleGame.startNewGame(number);
     scrabbleGame.fillAllPlayersRack(initialBag);
 
@@ -400,7 +401,7 @@ $(document).ready(function(){
     drop:function(event, ui, sound){
       snapToMiddle(ui.draggable,$(this));
       console.log(ui.draggable);
-      sound = document.getElementById(currentPlayer.rack[i].id);
+      sound = document.getElementById(scrabbleGame.currentPlayer.rack[0].id);
       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
       console.log(inputCellTileString);
 
@@ -451,16 +452,27 @@ $("#refill").click(function () {
 
 });
 
+//NUMBER OF PLAYERS
+  function checkPlayerCount(playerID){
+    console.log(playerID);
+    return playerID;
+  }
+  for(i=1; i <=4; i++){
+    $("button#" + i + "player").click(function(){
+      checkPlayerCount(parseInt($(this).attr("val")));
+      $("#playerNumbers").hide();
+      $("#start").show();
+    });
+  }
 
   $("button#score").click(function(){
     scrabbleGame.turn();
-
-    $("#playerScore").append("<p>Your score is: " + scrabbleGame.currentPlayer.score + "</p>");
+    $("#playerScore").append("<p>" + scrabbleGame.currentPlayer.name + ", your score is: " + scrabbleGame.currentPlayer.score + "</p>");
   });
 
   $("button#reset").click(function(){
     console.log("RESET");
-    $("#playerOneRack").empty("div.draggable");
+    $("#player1Rack").empty("div.draggable");
   });
 
   $("button#pass").click(function(){
@@ -469,6 +481,35 @@ $("#refill").click(function () {
 
     scrabbleGame.switchPlayer();
     console.log(scrabbleGame.currentPlayer.name);
+    //RECURSE THIS PLZZZZZZZZ DAVID
+      if (scrabbleGame.currentPlayer.name === ("Player2")) {
+        console.log("show player 2 rack");
+        $("#player1Rack").hide();
+        $("#player2Rack").show();
+        $("#player3Rack").hide();
+        $("#player4Rack").hide();
+      }
+      else if (scrabbleGame.currentPlayer.name === ("Player3")) {
+        console.log("show player 3 rack");
+        $("#player1Rack").hide();
+        $("#player2Rack").hide();
+        $("#player3Rack").show();
+        $("#player4Rack").hide();
+      }
+      else if (scrabbleGame.currentPlayer.name === ("Player4")) {
+        console.log("show player 4 rack");
+        $("#player1Rack").hide();
+        $("#player2Rack").hide();
+        $("#player3Rack").hide();
+        $("#player4Rack").show();
+      }
+      else {
+        console.log("show player 1 rack");
+        $("#player1Rack").show();
+        $("#player2Rack").hide();
+        $("#player3Rack").hide();
+        $("#player4Rack").hide();
+      }
 
 
   });

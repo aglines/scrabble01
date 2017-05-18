@@ -125,6 +125,9 @@ p, ol li{
 }
 
 /*RIGHT COLUMN*/
+#playerHeight {
+  height: 300px;
+}
 
 #playerNumbers {
   margin-top: 20px;
@@ -143,7 +146,7 @@ p, ol li{
 }
 
 #containsStart {
-  height: 250px;
+  /*height: 250px;*/
 }
 
 #start {
@@ -169,8 +172,13 @@ p, ol li{
   font-size: 24px;
 }
 
-#tileBag {
+#refill {
   cursor: pointer;
+  display: none;
+}
+
+#tileBag {
+  height: 300px;
 }
 
 .subscript {
@@ -186,9 +194,9 @@ p, ol li{
 }
 
 /*PLAYER RACKS*/
-#playerOneRack {
+#player1Rack, #player2Rack, #player3Rack, #player4Rack {
   /*clear: left;*/
-  display: visible;
+  display: none;
   margin-top: 5px;
   margin-bottom: 5px;
   margin-left: 50px;
@@ -199,46 +207,32 @@ p, ol li{
   background: url("../img/rack.png") no-repeat;
 }
 
-#playerOneRack div {
+#player1Rack div, #player2Rack div, #player3Rack div, #player4Rack div {
   display: inline-block;
   width: 48px;
   height: 48px;
   text-align: center;
 }
 
-#playerOneRack:first-child {
+#player1Rack:first-child, #player2Rack:first-child, #player3Rack:first-child, #player4Rack:first-child {
   padding-left: 50px;
 }
 
-#playerOneRack .cell {
+#player1Rack .cell, #player2Rack .cell, #player3Rack .cell, #player4Rack .cell {
   border: 1px solid #000;
 }
 
-#playerTwoRack {
-  display: none;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 460px;
-  height: 61px;
-  background: url("../img/rack.png") no-repeat;
+#player1Rack {
+  border: 1px solid red;
 }
-
-#playerThreeRack {
-  display: none;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 460px;
-  height: 61px;
-  background: url("../img/rack.png");
+#player2Rack {
+  border: 1px solid green;
 }
-
-#playerFourRack {
-  display: none;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 460px;
-  height: 61px;
-  background: url("../img/rack.png");
+#player3Rack {
+  border: 1px solid black;
+}
+#player4Rack {
+  border: 1px solid yellow;
 }
 
 .tile {
