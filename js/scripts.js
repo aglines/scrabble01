@@ -60,7 +60,10 @@ Game.prototype.turn = function () {
   }
   debugger;
   if (this.checkValidWord()) {
-    console.log(this.currentPlayer.countScore());
+    console.log(this.currentPlayer.getTurnScore());
+    this.updatePlayerScore(this.currentPlayer.getTurnScore());
+    console.log("current player score", this.currentPlayer.score);
+
   } else {
     this.backTilesToRackFromBoard();
     console.log(this.currentPlayer.partialWord);
@@ -169,8 +172,8 @@ Player.prototype.removeTilefromRack = function (cell) {
   }
 };
 
-Player.prototype.playerScore = function (wordScore) {
-  return this.score += wordScore;
+Game.prototype.updatePlayerScore = function (wordScore) {
+  this.currentPlayer.score += wordScore;
 };
 
 Player.prototype.refillRack = function (initialBag) {
@@ -222,7 +225,7 @@ Game.prototype.checkValidWord = function () {
   return dictionary.includes(wordString);
 };
 
-Player.prototype.countScore = function() {
+Player.prototype.getTurnScore = function() {
 
   var wordScoreMultiplier = 1;
   var currentWordScore = 0;
@@ -347,6 +350,13 @@ $(document).ready(function(){
     dragger.offset({ top: topMove + offset.top, left: leftMove + offset.left });
   };
 
+
+////////////CLICKABLE BAG
+$("#refill").click(function () {
+  scrabbleGame.currentPlayer.refillRack(initialBag);
+  console.log(scrabbleGame.currentPlayer.rack);
+});
+
 //PLAYER BUTTON INPUT
   $("button#score").click(function(){
     // console.log("SCORE!");
@@ -363,6 +373,7 @@ $(document).ready(function(){
   $("button#pass").click(function(){
     var turnType = "pass";
     console.log("PASS");
+
   });
 
   // $(".refill").click(function () {
