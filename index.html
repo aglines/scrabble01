@@ -307,7 +307,7 @@
                     <div class="col-xs-1 cell makeMeDroppable" id="13-14"></div>
                   </div>
                   <div class="row" id="14">
-                  <!-- 15th row */ -->
+                    <!-- 15th row */ -->
                     <div class="col-xs-1 cell makeMeDroppable" id="14-00-3W"></div>
                     <div class="col-xs-1 cell makeMeDroppable" id="14-01"></div>
                     <div class="col-xs-1 cell makeMeDroppable" id="14-02"></div>
@@ -338,8 +338,8 @@
                   <div class="col-xs-1 cell makeMeDroppable" id="15-06"></div>
                 </div>
               </div>
-              <div id="playerTwoRack">
-                <div class="row" id="16">
+              <div class="row" id="16">
+                <div id="playerTwoRack">
                   <div class="col-xs-1 cell makeMeDroppable" id="16-00"></div>
                   <div class="col-xs-1 cell makeMeDroppable" id="16-01"></div>
                   <div class="col-xs-1 cell makeMeDroppable" id="16-02"></div>
@@ -349,31 +349,48 @@
                   <div class="col-xs-1 cell makeMeDroppable" id="16-06"></div>
                 </div>
               </div>
-              <div id="playerThreeRack">
-
+              <div class="row" id="17">
+                <div id="playerThreeRack">
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-00"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-01"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-02"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-03"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-04"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-05"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-06"></div>
+                </div>
               </div>
-              <div id="playerFourRack">
-
+              <div class="row" id="18">
+                <div id="playerFourRack">
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-00"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-01"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-02"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-03"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-04"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-05"></div>
+                  <div class="col-xs-1 cell makeMeDroppable" id="16-06"></div>
+                </div>
               </div>
             </div>
             <div class="col-xs-3">
               <div class="startOptions">
                 <div id="playerNumbers">
                   <p>Number of players</p>
-                  <button id="1player" type="button" name="1player">1</button>
-                  <button id="2player" type="button" name="2player">2</button>
-                  <button id="3player" type="button" name="3player">3</button>
-                  <button id="4player" type="button" name="4player">4</button>
+                  <button id="1player" type="button" val="1">1</button>
+                  <button id="2player" type="button" val="2">2</button>
+                  <button id="3player" type="button" val="3">3</button>
+                  <button id="4player" type="button" val="4">4</button>
                 </div>
                 <div id="containsStart">
-                  <span class="clickable" id="start"><img src="img/startGraphic.png" width="250px" alt=""></span>
+                  <span class="clickable" id="start"><audio id="audio" src="audio/bag.mp3" autostart="false"></audio><a onclick="PlaySound()"><img src="img/startGraphic.png" width="250px" alt=""></a></span>
+                  <span class="showDuringGamePlay"><img src="img/goodluck.png" alt="Good Luck!"></span>
                 </div>
               </div>
               <div id="playerScore">
 
               </div>
               <div id="tileBag">
-                <span class="clickable" id="refill"><img src="img/scrabbleBag.png" alt="Tile Bag"></span>
+                <span class="clickable" id="refill"><audio id="audio" src="audio/bag.mp3" autostart="false"></audio><a onclick="PlaySound()"><img src="img/scrabbleBag.png" alt="Tile Bag"></a></span>
               </div>
               <div id="playerButtons">
                 <button id="score" type="button" name="score">Score</button>
