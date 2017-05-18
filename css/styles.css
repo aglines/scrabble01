@@ -171,6 +171,7 @@ p, ol li{
 
 #tileBag {
   cursor: pointer;
+  display: none;
 }
 
 .subscript {

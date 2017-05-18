@@ -337,6 +337,8 @@ $(document).ready(function(){
   $("#start").click(function(){
     $(this).hide();
     $(".showDuringGamePlay").show();
+    $("#tileBag").show();
+
     var currentPlayer = scrabbleGame.currentPlayer;
     currentPlayer.refillRack(initialBag);
     for(i=0; i <= currentPlayer.rack.length-1; i++){
@@ -408,6 +410,7 @@ $("#refill").click(function () {
 
 //NUMBER OF PLAYERS
   function checkPlayerCount(playerID){
+    console.log(playerID);
     return playerID;
   }
   for(i=1; i <=4; i++){
