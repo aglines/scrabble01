@@ -14,7 +14,7 @@ function sortNumber(a,b) {
 };
 
 function sortPartialWord(partialWord, isHorizontal) {
-  debugger;
+  // debugger;
   var arrayOfCoords =[];
   var result = [];
   for (var i = 0; i < partialWord.length; i++) {
@@ -102,7 +102,7 @@ Game.prototype.turn = function () {
     console.log(this.currentPlayer.currentWord);
   }
 
-  debugger;
+  // debugger;
 
   if (this.checkValidWord()) {
     console.log(this.currentPlayer.getTurnScore());
@@ -128,7 +128,7 @@ Game.prototype.backTilesToRackFromBoard = function () {
 
 Game.prototype.switchPlayer = function () {
   for (var i = 0; i < this.players.length; i++) {
-    debugger;
+    // debugger;
     if (this.currentPlayer.name === this.players[this.players.length-1].name) {
       this.currentPlayer = this.players[0];
     } else if (this.currentPlayer.name === this.players[i].name) {
@@ -283,7 +283,7 @@ Player.prototype.getTurnScore = function() {
 
   var wordScoreMultiplier = 1;
   var currentWordScore = 0;
-  debugger;
+  // debugger;
   for (var i = 0; i <= this.currentWord.length-1; i++) {
     if (typeof this.currentWord[i].pointMultiplier === 'undefined') {
       currentWordScore += parseInt(this.currentWord[i].tile.letterValue);
@@ -335,7 +335,16 @@ Game.prototype.checkEndGame = function () {
 
 
 
+//TEST FUNCTION FOR INCREASING THE APPENDMENT DIV
+//ADD RACKS AND POPULATE WITH TILES
+Game.prototype.increasePlayerRackDivID = function(idString){
+  debugger;
 
+    for(i=0; i <= this.currentPlayer.rack.length-1; i++){
+      $("#" + idString + "-0" + i).append("<div class='draggable tile letter" + this.currentPlayer.rack[i].letter + "' id='" + this.currentPlayer.rack[i].id + "'><audio id='audio' src='audio/tile.mp3' autostart='false'></audio><a onclick='PlaySound()'>" + this.currentPlayer.rack[i].letter + "<span class='subscript'>" + this.currentPlayer.rack[i].letterValue.sub() + "</span></a></div></div>");
+    }
+
+}
 
 
 
@@ -346,7 +355,8 @@ Game.prototype.checkEndGame = function () {
 
 $(document).ready(function(){
   var number;
-    var scrabbleGame = new Game();
+  var scrabbleGame = new Game();
+
 
 //NUMBER OF PLAYERS
   function checkPlayerCount(playerID){
@@ -357,7 +367,6 @@ $(document).ready(function(){
       number = checkPlayerCount(parseInt($(this).attr("val")));
       $("#playerNumbers").hide();
       $("#start").show();
-
     });
   }
 
@@ -371,9 +380,7 @@ $(document).ready(function(){
     scrabbleGame.fillAllPlayersRack(initialBag);
 
     var currentPlayer = scrabbleGame.currentPlayer;
-    for(i=0; i <= currentPlayer.rack.length-1; i++){
-      $("#15-0" + i).append("<div class='draggable tile letter" + currentPlayer.rack[i].letter + "' id='" + currentPlayer.rack[i].id + "'><audio id='audio' src='audio/tile.mp3' autostart='false'></audio><a onclick='PlaySound()'>" + currentPlayer.rack[i].letter + '<span class="subscript">' + currentPlayer.rack[i].letterValue.sub() + '</span>' + "</a></div></div>");
-    }
+    scrabbleGame.increasePlayerRackDivID(15);
     $(".draggable").draggable();
   });
   //DRAG AND DROP SQUARES
@@ -440,7 +447,6 @@ $("#refill").click(function () {
 
 //NUMBER OF PLAYERS
   function checkPlayerCount(playerID){
-    console.log(playerID);
     return playerID;
   }
   for(i=1; i <=4; i++){
@@ -463,40 +469,42 @@ $("#refill").click(function () {
 
   $("button#pass").click(function(){
     var turnType = "pass";
-    console.log("PASS");
 
     scrabbleGame.switchPlayer();
     console.log(scrabbleGame.currentPlayer.name);
     //RECURSE THIS PLZZZZZZZZ DAVID
-      if (scrabbleGame.currentPlayer.name === ("Player2")) {
-        console.log("show player 2 rack");
-        $("#player1Rack").hide();
-        $("#player2Rack").show();
-        $("#player3Rack").hide();
-        $("#player4Rack").hide();
-      }
-      else if (scrabbleGame.currentPlayer.name === ("Player3")) {
-        console.log("show player 3 rack");
-        $("#player1Rack").hide();
-        $("#player2Rack").hide();
-        $("#player3Rack").show();
-        $("#player4Rack").hide();
-      }
-      else if (scrabbleGame.currentPlayer.name === ("Player4")) {
-        console.log("show player 4 rack");
-        $("#player1Rack").hide();
-        $("#player2Rack").hide();
-        $("#player3Rack").hide();
-        $("#player4Rack").show();
-      }
-      else {
-        console.log("show player 1 rack");
-        $("#player1Rack").show();
-        $("#player2Rack").hide();
-        $("#player3Rack").hide();
-        $("#player4Rack").hide();
-      }
-
+    if (scrabbleGame.currentPlayer.name === ("Player1")) {
+      $("div.tile").remove("");
+      scrabbleGame.increasePlayerRackDivID(15);
+      $("#player1Rack").show();
+      $("#player2Rack").hide();
+      $("#player3Rack").hide();
+      $("#player4Rack").hide();
+    }
+    if (scrabbleGame.currentPlayer.name === ("Player2")) {
+      $("div.tile").remove("");
+      scrabbleGame.increasePlayerRackDivID(16);
+      $("#player1Rack").hide();
+      $("#player2Rack").show();
+      $("#player3Rack").hide();
+      $("#player4Rack").hide();
+    }
+    if (scrabbleGame.currentPlayer.name === ("Player3")) {
+      $("div.tile").remove("");
+      scrabbleGame.increasePlayerRackDivID(17);
+      $("#player1Rack").hide();
+      $("#player2Rack").hide();
+      $("#player3Rack").show();
+      $("#player4Rack").hide();
+    }
+    if (scrabbleGame.currentPlayer.name === ("Player4")) {
+      $("div.tile").remove("");
+      scrabbleGame.increasePlayerRackDivID(18);
+      $("#player1Rack").hide();
+      $("#player2Rack").hide();
+      $("#player3Rack").hide();
+      $("#player4Rack").show();
+    }
 
   });
 
