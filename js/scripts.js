@@ -2,6 +2,7 @@
 
 var initialBag = JSON.parse(bag);
 var dictionary = JSON.parse(words);
+console.log("JSON dict length ", dictionary.length);
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
