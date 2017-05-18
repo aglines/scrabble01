@@ -2,6 +2,7 @@
 
 var initialBag = JSON.parse(bag);
 var dictionary = JSON.parse(words);
+console.log("JSON dict length ", dictionary.length);
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -14,7 +15,7 @@ function sortNumber(a,b) {
 };
 
 function sortPartialWord(partialWord, isHorizontal) {
-  debugger;
+  // debugger;
   var arrayOfCoords =[];
   var result = [];
   for (var i = 0; i < partialWord.length; i++) {
@@ -125,7 +126,7 @@ Game.prototype.backTilesToRackFromBoard = function () {
 
 Game.prototype.switchPlayer = function () {
   for (var i = 0; i < this.players.length; i++) {
-    debugger;
+    // debugger;
     if (this.currentPlayer.name === this.players[this.players.length-1].name) {
       this.currentPlayer = this.players[0];
     } else if (this.currentPlayer.name === this.players[i].name) {
