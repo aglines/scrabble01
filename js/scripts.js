@@ -121,13 +121,22 @@ Game.prototype.backTilesToRackFromBoard = function () {
 };
 
 Game.prototype.switchPlayer = function () {
-  if (this.currentPlayer.name === this.players[0].name) {
-    this.currentPlayer = this.players[1];
-    console.log(this.currentPlayer);
-  } else {
-    this.currentPlayer = this.players[0];
-    console.log(this.currentPlayer);
+  for (var i = 0; i < this.players.length; i++) {
+    debugger;
+    if (this.currentPlayer.name === this.players[this.players.length-1].name) {
+      this.currentPlayer = this.players[0];
+    } else if (this.currentPlayer.name === this.players[i].name) {
+      this.currentPlayer = this.players[i+1];
+      break;
+    }
   }
+  // if (this.currentPlayer.name === this.players[0].name) {
+  //   this.currentPlayer = this.players[1];
+  //   console.log(this.currentPlayer);
+  // } else {
+  //   this.currentPlayer = this.players[0];
+  //   console.log(this.currentPlayer);
+  // }
 };
 
 Game.prototype.generateBoard = function () {
@@ -287,12 +296,19 @@ Player.prototype.getTurnScore = function() {
   return currentWordScore *= wordScoreMultiplier;
 };
 
-Game.prototype.startNewGame = function () {
+Game.prototype.startNewGame = function (numberOfPlayers) {
   this.generateBoard();
-  this.players.push(new Player ("Tom"));
-  this.players.push(new Player ("Jerry"));
+  for (var i = 0; i <numberOfPlayers; i++) {
+    this.players.push(new Player ("Player" + (i+1)));
+  }
 
   this.currentPlayer = this.players[0];
+};
+Game.prototype.fillAllPlayersRack = function () {
+  for (var i = 0; i < this.players.length; i++) {
+    this.players[i].refillRack(initialBag);
+    console.log(this.players[i].rack);
+  }
 };
 
 Game.prototype.checkEndGame = function () {
@@ -324,14 +340,15 @@ Game.prototype.checkEndGame = function () {
 
 $(document).ready(function(){
     var scrabbleGame = new Game();
-    scrabbleGame.startNewGame();
+    scrabbleGame.startNewGame(numberOfPlayers);
 
 
 //TILE BAG USER INTERFACE
   $("#start").click(function(){
     $(this).hide();
+    scrabbleGame.fillAllPlayersRack(initialBag);
     var currentPlayer = scrabbleGame.currentPlayer;
-    currentPlayer.refillRack(initialBag);
+    // currentPlayer.refillRack(initialBag);
     for(i=0; i <= currentPlayer.rack.length-1; i++){
       $("#15-0" + i).append("<div class='draggable tile letter" + currentPlayer.rack[i].letter + "' id='" + currentPlayer.rack[i].id + "'>" + currentPlayer.rack[i].letter + '<span class="subscript">' + currentPlayer.rack[i].letterValue.sub() + '</span>' + "</div></div>");
     }
@@ -415,6 +432,8 @@ $("#refill").click(function () {
   $("button#pass").click(function(){
     var turnType = "pass";
     console.log("PASS");
+    scrabbleGame.switchPlayer();
+    console.log(scrabbleGame.currentPlayer.name);
 
   });
 
