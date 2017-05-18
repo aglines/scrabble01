@@ -46,6 +46,12 @@ function sortPartialWord(partialWord, isHorizontal) {
   return result;
 };
 
+//SOUND EFFECTS
+function PlaySound() {
+  var sound = document.getElementById("audio");
+  sound.play();
+}
+
 function Bag() {
   this.bagTiles = initialBag;
 };
@@ -330,10 +336,11 @@ $(document).ready(function(){
 //TILE BAG USER INTERFACE
   $("#start").click(function(){
     $(this).hide();
+    $(".showDuringGamePlay").show();
     var currentPlayer = scrabbleGame.currentPlayer;
     currentPlayer.refillRack(initialBag);
     for(i=0; i <= currentPlayer.rack.length-1; i++){
-      $("#15-0" + i).append("<div class='draggable tile letter" + currentPlayer.rack[i].letter + "' id='" + currentPlayer.rack[i].id + "'>" + currentPlayer.rack[i].letter + '<span class="subscript">' + currentPlayer.rack[i].letterValue.sub() + '</span>' + "</div></div>");
+      $("#15-0" + i).append("<div class='draggable tile letter" + currentPlayer.rack[i].letter + "' id='" + currentPlayer.rack[i].id + "'><audio id='audio' src='audio/tile.mp3' autostart='false'></audio><a onclick='PlaySound()'>" + currentPlayer.rack[i].letter + '<span class="subscript">' + currentPlayer.rack[i].letterValue.sub() + '</span>' + "</a></div></div>");
     }
     $(".draggable").draggable();
   });
@@ -351,10 +358,10 @@ $(document).ready(function(){
   });
 
   $('div.row').find('.cell').droppable({
-    drop:function(event, ui){
+    drop:function(event, ui, sound){
       snapToMiddle(ui.draggable,$(this));
       console.log(ui.draggable);
-
+      sound = document.getElementById(currentPlayer.rack[i].id);
       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
       console.log(inputCellTileString);
 
@@ -392,30 +399,39 @@ $(document).ready(function(){
   };
 
 
-////////////CLICKABLE BAG
+//CLICKABLE BAG
 $("#refill").click(function () {
   scrabbleGame.currentPlayer.refillRack(initialBag);
   console.log(scrabbleGame.currentPlayer.rack);
   scrabbleGame.switchPlayer();
 });
 
-//PLAYER BUTTON INPUT
+//NUMBER OF PLAYERS
+  function checkPlayerCount(playerID){
+    return playerID;
+  }
+  for(i=1; i <=4; i++){
+    $("button#" + i + "player").click(function(){
+      checkPlayerCount(parseInt($(this).attr("val")));
+      $("#playerNumbers").hide();
+      $("#start").show();
+    });
+  }
+
   $("button#score").click(function(){
-    // console.log("SCORE!");
     scrabbleGame.turn();
     console.log(scrabbleGame.turn());
-    $("#playerScore").append("<p>Your score is: " + scrabbleGame.turn() + "</p>");
+    $("#playerScore").append("<p>Your score is: " + scrabbleGame.currentPlayer.score + "</p>");
   });
 
   $("button#reset").click(function(){
     console.log("RESET");
-    $("#playerOneRack").empty("");
+    $("#playerOneRack").empty("div.draggable");
   });
 
   $("button#pass").click(function(){
     var turnType = "pass";
     console.log("PASS");
-
   });
 
   // $(".refill").click(function () {

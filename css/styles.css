@@ -68,6 +68,11 @@ p, ol li{
   font-size: 16px;
 }
 
+.draggable a {
+  text-decoration: none;
+  color: #000;
+}
+
 #credits p {
   margin-left: 10px;
 }
@@ -125,8 +130,9 @@ p, ol li{
   margin-top: 20px;
   margin-right: 20px;
   line-height: 20px;
+  height: 25px;
   text-align: right;
-  /*float: right;*/
+  display: visible;
 }
 
 #playerNumbers button {
@@ -141,13 +147,17 @@ p, ol li{
 }
 
 #start {
-  display: visible;
+  display: none;
 }
 
 #start img{
   margin: 20px 0 20px;
   padding: 0;
   cursor: pointer;
+}
+
+.showDuringGamePlay {
+  display: none;
 }
 
 #playerScore {
