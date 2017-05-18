@@ -1,5 +1,4 @@
-
-
+//BUSINESS LOGIC
 var initialBag = JSON.parse(bag);
 var dictionary = JSON.parse(words);
 console.log("JSON dict length ", dictionary.length);
@@ -15,7 +14,6 @@ function sortNumber(a,b) {
 };
 
 function sortPartialWord(partialWord, isHorizontal) {
-  // debugger;
   var arrayOfCoords =[];
   var result = [];
   for (var i = 0; i < partialWord.length; i++) {
@@ -28,10 +26,7 @@ function sortPartialWord(partialWord, isHorizontal) {
 
   arrayOfCoords = arrayOfCoords.sort(sortNumber);
   for (var i = 0; i < arrayOfCoords.length; i++) {
-    // debugger;
     for (var j = 0; j < partialWord.length; j++) {
-      // debugger;
-
       if (isHorizontal) {
         if (partialWord[j].x === arrayOfCoords[i]) {
           result.push(partialWord[j]);
@@ -43,7 +38,6 @@ function sortPartialWord(partialWord, isHorizontal) {
       }
     }
   };
-  // console.log(result);
   return result;
 };
 
@@ -51,6 +45,10 @@ function sortPartialWord(partialWord, isHorizontal) {
 function PlaySound() {
   var sound = document.getElementById("audio");
   sound.play();
+}
+
+function checkPlayerCount(playerID){
+  return playerID;
 }
 
 function Bag() {
@@ -98,7 +96,6 @@ Game.prototype.turn = function () {
     this.currentPlayer.currentWord = this.completeVerticalWord(this.currentPlayer.partialWord);
     // console.log(this.currentPlayer.currentWord);
   }
-
   if (this.checkHorizontalPosition()) {
     this.currentPlayer.currentWord = this.completeHorizontalWord(this.currentPlayer.partialWord);
     // console.log(this.currentPlayer.currentWord);
@@ -107,7 +104,6 @@ Game.prototype.turn = function () {
     console.log(this.currentPlayer.getTurnScore());
     this.updatePlayerScore(this.currentPlayer.getTurnScore());
     console.log("current player score", this.currentPlayer.score);
-
   } else {
     this.backTilesToRackFromBoard();
     console.log("Partial Word:", this.currentPlayer.partialWord);
@@ -125,7 +121,6 @@ Game.prototype.backTilesToRackFromBoard = function () {
 
 Game.prototype.switchPlayer = function () {
   for (var i = 0; i < this.players.length; i++) {
-    // debugger;
     if (this.currentPlayer.name === this.players[this.players.length-1].name) {
       this.currentPlayer = this.players[0];
     } else if (this.currentPlayer.name === this.players[i].name) {
@@ -148,7 +143,7 @@ Game.prototype.generateBoard = function () {
 };
 
 Game.prototype.completeHorizontalWord = function (partialWord) {
-  // debugger;
+
   var completeWord = [];
   partialWord = sortPartialWord(partialWord, true)
   var horizontal = this.board[partialWord[0].y];// take whole horizontal array from board with y coord
@@ -201,8 +196,6 @@ Game.prototype.completeVerticalWord = function (partialWord) {
     lastY++;
   }
   console.log("Completed Vertical Word ", completeWord);
-
-
   return completeWord;
 };
 
@@ -282,7 +275,6 @@ Player.prototype.getTurnScore = function() {
 
   var wordScoreMultiplier = 1;
   var currentWordScore = 0;
-  // debugger;
   for (var i = 0; i <= this.currentWord.length-1; i++) {
     if (typeof this.currentWord[i].pointMultiplier === 'undefined') {
       currentWordScore += parseInt(this.currentWord[i].tile.letterValue);
@@ -356,12 +348,8 @@ Game.prototype.findWinner = function () {
 //===========================================================================
 
 
-
-//TEST FUNCTION FOR INCREASING THE APPENDMENT DIV
-//ADD RACKS AND POPULATE WITH TILES
+//POPULATE RACK WITH TILES
 Game.prototype.increasePlayerRackDivID = function(idString){
-  debugger;
-
     for(i=0; i <= this.currentPlayer.rack.length-1; i++){
       $("#" + idString + "-0" + i).append("<div class='draggable tile letter" + this.currentPlayer.rack[i].letter + "' id='" + this.currentPlayer.rack[i].id + "'><audio id='audio' src='audio/tile.mp3' autostart='false'></audio><a onclick='PlaySound()'>" + this.currentPlayer.rack[i].letter + "<span class='subscript'>" + this.currentPlayer.rack[i].letterValue.sub() + "</span></a></div></div>");
     }
@@ -425,7 +413,7 @@ $(document).ready(function(){
       console.log(ui.draggable);
       sound = document.getElementById(scrabbleGame.currentPlayer.rack[0].id);
       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
-      // console.log(inputCellTileString);
+
 
       var cellYAxis = parseInt(inputCellTileString[0]);
       var cellXAxis = parseInt(inputCellTileString[1]);
@@ -436,17 +424,11 @@ $(document).ready(function(){
 
       if ((cellYAxis <= 14) && (cellXAxis <= 14)) {
         scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
-        ui.draggable.removeClass("ui-draggable-dragging");
         scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
-        // console.log(scrabbleGame.board[cellYAxis][cellXAxis]);
-
-        ui.draggable.draggable('destroy');
-
         scrabbleGame.currentPlayer.buildPartialWord(scrabbleGame.board[cellYAxis][cellXAxis]);
+        ui.draggable.removeClass("ui-draggable-dragging");
+        ui.draggable.draggable('destroy');
       }
-      // else if ((cellYAxis >= 15) || (cellXAxis >= 15)){
-      //   ui.draggable.draggable('dont destroy');
-      // }
       else{
         console.log("failing xomg");
       }
@@ -473,9 +455,6 @@ $("#refill").click(function () {
 });
 
 //NUMBER OF PLAYERS
-  function checkPlayerCount(playerID){
-    return playerID;
-  }
   for(i=1; i <=4; i++){
     $("button#" + i + "player").click(function(){
       checkPlayerCount(parseInt($(this).attr("val")));
@@ -531,5 +510,4 @@ $("#refill").click(function () {
       $("#player4Rack").show();
     }
   });
-
 });
