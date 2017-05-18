@@ -1,14 +1,19 @@
 body {
   margin: 0;
   padding: 0;
-  background: #FFF3B6 url("../img/scrabbleLogo.png");
+  background: #FFF3B6 url("../img/tile-bckgrnd.jpg") no-repeat top left fixed;
   font-family: 'Open Sans', sans-serif;
 }
 
-h1 {
+.jumbotron-fluid {
   text-align: center;
-  font-weight: 900;
-  font-size: 60px;
+  padding: 0;
+  margin: 0;
+  height: 200px;
+}
+
+.header-logo img {
+  margin-top: -50px;
 }
 
 .nav li a {
@@ -101,7 +106,7 @@ p, ol li{
   background: url("../img/board-bckgrnd.png");
   width: 750px;
   height: 750px;
-  float: left;
+  /*float: left;*/
 }
 
 .row {
@@ -114,74 +119,69 @@ p, ol li{
   padding: 0;
 }
 
-#tileBag {
-  float: right;
-  cursor: pointer;
-  height: 300px;
-  width: 300px;
-}
-
-/*#tileBag h4 {
-  padding: 0;
-  text-align: center;
-  animation-name: colorFlash;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;*/
-}
-
-#tileBag img {
-  margin-top: -50px;
-}
-
-.subscript {
-  font-size: 20px;
-}
-
-.btn {
-  border-radius: 10px;
-  width: 75px;
-  color: #ffffff;
-  background-color: #003aff;
-  text-align: center;
-  float: right;
-}
-
-.start {
-  margin-top: 20px;
-  float: right;
-}
+/*RIGHT COLUMN*/
 
 #playerNumbers {
   margin-top: 20px;
   margin-right: 20px;
   line-height: 20px;
   text-align: right;
-  float: right;
+  /*float: right;*/
 }
 
 #playerNumbers button {
   border-radius: 10px;
-  width: 60px;
-  color: #ffffff;
-  background-color: #003aff;
+  width: 40px;
+  color: #000;
+  background: url("../img/traditional-tile.png");
 }
 
-/*PLAYER RACKS*/
+#containsStart {
+  height: 250px;
+}
+
+#start {
+  display: visible;
+}
+
+#start img{
+  margin: 20px 0 20px;
+  padding: 0;
+  cursor: pointer;
+}
+
+#playerScore {
+  margin: 10px 20px 50px;
+  height: 50px;
+}
+
+#playerScore p {
+  font-size: 24px;
+}
+
+#tileBag {
+  cursor: pointer;
+}
+
+.subscript {
+  font-size: 20px;
+}
+
 #playerButtons button {
   border-radius: 10px;
   width: 60px;
-  color: #ffffff;
-  background-color: #003aff;
-  margin: 150px 0px 0px 5px;
-  float: right;
-  margin-right: 20px;
+  color: #000;
+  background: url("../img/traditional-tile.png");
+  margin: 0px;
 }
 
+/*PLAYER RACKS*/
 #playerOneRack {
-  clear: left;
+  /*clear: left;*/
   display: visible;
   margin-top: 5px;
   margin-bottom: 5px;
+  margin-left: 50px;
   text-align: center;
   padding: 3px;
   width: 460px;
@@ -194,6 +194,10 @@ p, ol li{
   width: 48px;
   height: 48px;
   text-align: center;
+}
+
+#playerOneRack:first-child {
+  padding-left: 50px;
 }
 
 #playerOneRack .cell {

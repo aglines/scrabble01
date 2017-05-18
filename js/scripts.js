@@ -95,17 +95,21 @@ Game.prototype.turn = function () {
     this.currentPlayer.currentWord = this.completeHorizontalWord(this.currentPlayer.partialWord);
     console.log(this.currentPlayer.currentWord);
   }
+
   debugger;
+
   if (this.checkValidWord()) {
     console.log(this.currentPlayer.getTurnScore());
     this.updatePlayerScore(this.currentPlayer.getTurnScore());
     console.log("current player score", this.currentPlayer.score);
+
 
   } else {
     this.backTilesToRackFromBoard();
     console.log(this.currentPlayer.partialWord);
   }
 };
+
 
 Game.prototype.backTilesToRackFromBoard = function () {
   for (var i = 0; i < this.currentPlayer.partialWord.length; i++) {
@@ -325,6 +329,7 @@ $(document).ready(function(){
 
 //TILE BAG USER INTERFACE
   $("#start").click(function(){
+    $(this).hide();
     var currentPlayer = scrabbleGame.currentPlayer;
     currentPlayer.refillRack(initialBag);
     for(i=0; i <= currentPlayer.rack.length-1; i++){
@@ -398,8 +403,8 @@ $("#refill").click(function () {
   $("button#score").click(function(){
     // console.log("SCORE!");
     scrabbleGame.turn();
-
-
+    console.log(scrabbleGame.turn());
+    $("#playerScore").append("<p>Your score is: " + scrabbleGame.turn() + "</p>");
   });
 
   $("button#reset").click(function(){
