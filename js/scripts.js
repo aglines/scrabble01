@@ -97,25 +97,22 @@ Game.prototype.turn = function () {
     this.currentPlayer.currentWord = this.completeVerticalWord(this.currentPlayer.partialWord);
     console.log(this.currentPlayer.currentWord);
   }
+
   if (this.checkHorizontalPosition()) {
     this.currentPlayer.currentWord = this.completeHorizontalWord(this.currentPlayer.partialWord);
     console.log(this.currentPlayer.currentWord);
   }
-
-  debugger;
 
   if (this.checkValidWord()) {
     console.log(this.currentPlayer.getTurnScore());
     this.updatePlayerScore(this.currentPlayer.getTurnScore());
     console.log("current player score", this.currentPlayer.score);
 
-
   } else {
     this.backTilesToRackFromBoard();
     console.log(this.currentPlayer.partialWord);
   }
 };
-
 
 Game.prototype.backTilesToRackFromBoard = function () {
   for (var i = 0; i < this.currentPlayer.partialWord.length; i++) {
@@ -136,13 +133,6 @@ Game.prototype.switchPlayer = function () {
       break;
     }
   }
-  // if (this.currentPlayer.name === this.players[0].name) {
-  //   this.currentPlayer = this.players[1];
-  //   console.log(this.currentPlayer);
-  // } else {
-  //   this.currentPlayer = this.players[0];
-  //   console.log(this.currentPlayer);
-  // }
 };
 
 Game.prototype.generateBoard = function () {
@@ -310,6 +300,7 @@ Game.prototype.startNewGame = function (numberOfPlayers) {
 
   this.currentPlayer = this.players[0];
 };
+
 Game.prototype.fillAllPlayersRack = function () {
   for (var i = 0; i < this.players.length; i++) {
     this.players[i].refillRack(initialBag);
@@ -329,6 +320,23 @@ Game.prototype.checkEndGame = function () {
   } else {
     return false;
   }
+};
+
+Game.prototype.findWinner = function () {
+  for (var i = 0; i < this.players.length; i++) {
+    // cycle through all players
+    var tempHighestScore = "";
+    var winner = [];
+    // if current player score is higher than var tempWInner
+    if (this.players[i].score > tempHighestScore ) {
+      winner[i] = this.players[i].name;
+    }
+    else if (this.players[i].score === tempHighestScore ) {
+      winner.push(this.players[i].name);
+    }
+  }
+  console.log("Winner is", winner);
+  return winner;
 };
 
 //===========================================================================
@@ -433,8 +441,14 @@ $(document).ready(function(){
 //CLICKABLE BAG
 $("#refill").click(function () {
   scrabbleGame.currentPlayer.refillRack(initialBag);
+  if (scrabbleGame.checkEndGame()) {
+    scrabbleGame.findWinner();
+  } else  {
+    scrabbleGame.switchPlayer();
+  }
+
   console.log(scrabbleGame.currentPlayer.rack);
-  scrabbleGame.switchPlayer();
+
 });
 
 
