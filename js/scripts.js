@@ -403,8 +403,8 @@ $("#refill").click(function () {
   $("button#score").click(function(){
     // console.log("SCORE!");
     scrabbleGame.turn();
-    console.log(scrabbleGame.turn());
-    $("#playerScore").append("<p>Your score is: " + scrabbleGame.turn() + "</p>");
+    // console.log(scrabbleGame.turn());
+    $("#playerScore").append("<p>Your score is: " + scrabbleGame.currentPlayer.score + "</p>");
   });
 
   $("button#reset").click(function(){
