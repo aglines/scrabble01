@@ -42,7 +42,7 @@ function sortPartialWord(partialWord, isHorizontal) {
       }
     }
   };
-  console.log(result);
+  // console.log(result);
   return result;
 };
 
@@ -95,12 +95,12 @@ Player.prototype.getTilebyId = function (tileId) {
 Game.prototype.turn = function () {
   if (this.checkVerticalPosition()) {
     this.currentPlayer.currentWord = this.completeVerticalWord(this.currentPlayer.partialWord);
-    console.log(this.currentPlayer.currentWord);
+    // console.log(this.currentPlayer.currentWord);
   }
 
   if (this.checkHorizontalPosition()) {
     this.currentPlayer.currentWord = this.completeHorizontalWord(this.currentPlayer.partialWord);
-    console.log(this.currentPlayer.currentWord);
+    // console.log(this.currentPlayer.currentWord);
   }
 
   if (this.checkValidWord()) {
@@ -110,7 +110,7 @@ Game.prototype.turn = function () {
 
   } else {
     this.backTilesToRackFromBoard();
-    console.log(this.currentPlayer.partialWord);
+    console.log("Partial Word:", this.currentPlayer.partialWord);
   }
 };
 
@@ -173,6 +173,7 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
     completeWord.push(horizontal[lastX+1]);
     lastX++;
   }
+  console.log("Completed Horizontal Word ", completeWord);
   return completeWord;
 };
 
@@ -197,14 +198,17 @@ Game.prototype.completeVerticalWord = function (partialWord) {
   }
   while ( (lastY+1<=14) && (typeof this.board[lastY+1][xCoord].tile.id !== 'undefined')) {
     completeWord.push(this.board[firstY+1][xCoord]);
-    console.log(this.board[firstY+1][xCoord].tile.id);
     lastY++;
   }
+  console.log("Completed Vertical Word ", completeWord);
+
+
   return completeWord;
 };
 
 Player.prototype.buildPartialWord = function (cell) {
   this.partialWord.push(cell);
+  console.log("Partial word: ",  this.partialWord);
   this.removeTilefromRack(cell);
 
 };
@@ -218,6 +222,7 @@ Player.prototype.removeTilefromRack = function (cell) {
 
 Game.prototype.updatePlayerScore = function (wordScore) {
   this.currentPlayer.score += wordScore;
+
 };
 
 Player.prototype.refillRack = function (initialBag) {
@@ -226,6 +231,7 @@ Player.prototype.refillRack = function (initialBag) {
     var currentRandomInt = getRandomInt(0, initialBag.length-1);
     this.rack.push(initialBag[currentRandomInt]);
     initialBag.splice(currentRandomInt, 1);
+
   };
 }
 
@@ -235,24 +241,27 @@ Game.prototype.checkVerticalPosition = function () {
 
     if (this.currentPlayer.partialWord[i].x === this.currentPlayer.partialWord[i+1].x) {
       checkVertical = true;
+      console.log("checkVerticalPosition ", checkVertical);
     } else {
       checkVertical = false;
+      console.log("checkVerticalPosition ", checkVertical);
+
     }
   }
   return checkVertical;
 };
 
 Game.prototype.checkHorizontalPosition = function () {
-  // debugger;
   var checkHorizontal;
-  console.log(this.currentPlayer.partialWord);
   for (var i = 0; i < this.currentPlayer.partialWord.length-1; i++) {
-    // console.log(this.currentPlayer.partialWord[i].x);
-    // console.log(this.currentPlayer.partialWord[i+1].x);
+
     if (this.currentPlayer.partialWord[i].y === this.currentPlayer.partialWord[i+1].y) {
       checkHorizontal = true;
+      console.log("checkHorizontalPosition ", checkHorizontal);
+
     } else {
       checkHorizontal = false;
+      console.log("checkHorizontalPosition", checkHorizontal);
     }
   }
   return checkHorizontal;
@@ -264,8 +273,8 @@ Game.prototype.checkValidWord = function () {
     wordString+=this.currentPlayer.currentWord[i].tile.letter;
   }
   wordString = wordString.toLowerCase();
-  console.log(dictionary.includes(wordString));
 
+  console.log("Is word valid", dictionary.includes(wordString));
   return dictionary.includes(wordString);
 };
 
@@ -273,7 +282,7 @@ Player.prototype.getTurnScore = function() {
 
   var wordScoreMultiplier = 1;
   var currentWordScore = 0;
-  debugger;
+  // debugger;
   for (var i = 0; i <= this.currentWord.length-1; i++) {
     if (typeof this.currentWord[i].pointMultiplier === 'undefined') {
       currentWordScore += parseInt(this.currentWord[i].tile.letterValue);
@@ -289,7 +298,9 @@ Player.prototype.getTurnScore = function() {
       wordScoreMultiplier = 3;
     }
   };
-  return currentWordScore *= wordScoreMultiplier;
+  var score = currentWordScore *= wordScoreMultiplier;
+  console.log("Turn score: ", score);
+  return score;
 };
 
 Game.prototype.startNewGame = function (numberOfPlayers) {
@@ -297,14 +308,14 @@ Game.prototype.startNewGame = function (numberOfPlayers) {
   for (var i = 0; i <numberOfPlayers; i++) {
     this.players.push(new Player ("Player" + (i+1)));
   }
-
   this.currentPlayer = this.players[0];
+  console.log("Current player is:", this.currentPlayer);
 };
 
 Game.prototype.fillAllPlayersRack = function () {
   for (var i = 0; i < this.players.length; i++) {
     this.players[i].refillRack(initialBag);
-    console.log(this.players[i].rack);
+    console.log("Player" + i + "rack", this.players[i].rack);
   }
 };
 
@@ -316,8 +327,11 @@ Game.prototype.checkEndGame = function () {
     }
   }
   if (initialBag.length<=0 && emptyRack) {
+    console.log("End of game: ", true);
     return true;
   } else {
+    console.log("End of game: ", false);
+
     return false;
   }
 };
@@ -399,10 +413,10 @@ $(document).ready(function(){
   $('div.row').find('.cell').droppable({
     drop:function(event, ui, sound){
       snapToMiddle(ui.draggable,$(this));
-      console.log(ui.draggable);
-      sound = document.getElementById(currentPlayer.rack[i].id);
+      // console.log(ui.draggable);
+      sound = document.getElementById(scrabbleGame.currentPlayer.rack[0].id);
       var inputCellTileString = $(this).droppable(0).attr('id').split('-');
-      console.log(inputCellTileString);
+      // console.log(inputCellTileString);
 
       var cellYAxis = parseInt(inputCellTileString[0]);
       var cellXAxis = parseInt(inputCellTileString[1]);
@@ -415,7 +429,7 @@ $(document).ready(function(){
         scrabbleGame.board[cellYAxis][cellXAxis].tile = chosenTile;
         ui.draggable.removeClass("ui-draggable-dragging");
         scrabbleGame.board[cellYAxis][cellXAxis].pointMultiplier = cellScoreVariant;
-        console.log(scrabbleGame.board[cellYAxis][cellXAxis]);
+        // console.log(scrabbleGame.board[cellYAxis][cellXAxis]);
 
         ui.draggable.draggable('destroy');
 
@@ -437,20 +451,17 @@ $(document).ready(function(){
     dragger.offset({ top: topMove + offset.top, left: leftMove + offset.left });
   };
 
-
 //CLICKABLE BAG
 $("#refill").click(function () {
   scrabbleGame.currentPlayer.refillRack(initialBag);
+  console.log("Refilled rack ", scrabbleGame.currentPlayer.rack);
   if (scrabbleGame.checkEndGame()) {
     scrabbleGame.findWinner();
   } else  {
     scrabbleGame.switchPlayer();
+    console.log("Switch player to ", scrabbleGame.currentPlayer.name);
   }
-
-  console.log(scrabbleGame.currentPlayer.rack);
-
 });
-
 
   $("button#score").click(function(){
     scrabbleGame.turn();
@@ -459,24 +470,15 @@ $("#refill").click(function () {
   });
 
   $("button#reset").click(function(){
-    console.log("RESET");
+    // console.log("RESET");
     $("#playerOneRack").empty("div.draggable");
   });
 
   $("button#pass").click(function(){
-    var turnType = "pass";
-    console.log("PASS");
+    // console.log("PASS");
 
     scrabbleGame.switchPlayer();
-    console.log(scrabbleGame.currentPlayer.name);
-
-
+    // console.log(scrabbleGame.currentPlayer.name);
   });
-
-  // $(".refill").click(function () {
-  //   scrabbleGame.currentPlayer.refillRack();
-  //   console.log(scrabbleGame.currentPlayer);
-  // });
-
 
 });
