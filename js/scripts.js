@@ -345,15 +345,30 @@ Game.prototype.checkEndGame = function () {
 ////////////////////// USER INTERFACE
 
 $(document).ready(function(){
+  var number;
     var scrabbleGame = new Game();
-    scrabbleGame.startNewGame(numberOfPlayers);
 
+//NUMBER OF PLAYERS
+  function checkPlayerCount(playerID){
+    return playerID;
+  }
+  for(i=1; i <=4; i++){
+    $("button#" + i + "player").click(function(){
+      number = checkPlayerCount(parseInt($(this).attr("val")));
+      $("#playerNumbers").hide();
+      $("#start").show();
+
+    });
+  }
 
 //TILE BAG USER INTERFACE
   $("#start").click(function(){
     $(this).hide();
     $(".showDuringGamePlay").show();
+
+    scrabbleGame.startNewGame(number);
     scrabbleGame.fillAllPlayersRack(initialBag);
+
     var currentPlayer = scrabbleGame.currentPlayer;
     for(i=0; i <= currentPlayer.rack.length-1; i++){
       $("#15-0" + i).append("<div class='draggable tile letter" + currentPlayer.rack[i].letter + "' id='" + currentPlayer.rack[i].id + "'><audio id='audio' src='audio/tile.mp3' autostart='false'></audio><a onclick='PlaySound()'>" + currentPlayer.rack[i].letter + '<span class="subscript">' + currentPlayer.rack[i].letterValue.sub() + '</span>' + "</a></div></div>");
@@ -422,17 +437,6 @@ $("#refill").click(function () {
   scrabbleGame.switchPlayer();
 });
 
-//NUMBER OF PLAYERS
-  function checkPlayerCount(playerID){
-    return playerID;
-  }
-  for(i=1; i <=4; i++){
-    $("button#" + i + "player").click(function(){
-      checkPlayerCount(parseInt($(this).attr("val")));
-      $("#playerNumbers").hide();
-      $("#start").show();
-    });
-  }
 
   $("button#score").click(function(){
     scrabbleGame.turn();
