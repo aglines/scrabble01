@@ -1,16 +1,49 @@
 
 
 var initialBag = JSON.parse(bag);
-// console.log(initialBag);
-
-// test dictionary
 var dictionary = JSON.parse(words);
-// console.log(dictionary[1]);
 
 function getRandomInt(min, max) {
-min = Math.ceil(min);
-max = Math.floor(max);
+  min = Math.ceil(min);
+  max = Math.floor(max);
 return Math.floor(Math.random() * (max - min)) + min;
+};
+
+function sortNumber(a,b) {
+    return a - b;
+};
+
+function sortPartialWord(partialWord, isHorizontal) {
+  debugger;
+  var arrayOfCoords =[];
+  var result = [];
+  for (var i = 0; i < partialWord.length; i++) {
+    if (isHorizontal) {
+      arrayOfCoords.push(partialWord[i].x);
+    } else {
+      arrayOfCoords.push(partialWord[i].y);
+    }
+  }
+
+  arrayOfCoords = arrayOfCoords.sort(sortNumber);
+  for (var i = 0; i < arrayOfCoords.length; i++) {
+    // debugger;
+    for (var j = 0; j < partialWord.length; j++) {
+      // debugger;
+
+      if (isHorizontal) {
+        if (partialWord[j].x === arrayOfCoords[i]) {
+          result.push(partialWord[j]);
+        }
+      } else {
+        if (partialWord[j].y === arrayOfCoords[i]) {
+          result.push(partialWord[j]);
+        }
+      }
+    }
+  };
+  console.log(result);
+  return result;
 };
 
 function Bag() {
@@ -29,7 +62,6 @@ function Player(name) {
   this.rack = [];
   this.partialWord = [];
   this.currentWord = [];
-
 };
 
 function Tile() {
@@ -54,34 +86,47 @@ Player.prototype.getTilebyId = function (tileId) {
   }
 };
 
-Game.prototype.turn = function (player) {
+Game.prototype.turn = function () {
   if (this.checkVerticalPosition()) {
-    // debugger;
     this.currentPlayer.currentWord = this.completeVerticalWord(this.currentPlayer.partialWord);
     console.log(this.currentPlayer.currentWord);
   }
   if (this.checkHorizontalPosition()) {
-    // debugger;
     this.currentPlayer.currentWord = this.completeHorizontalWord(this.currentPlayer.partialWord);
     console.log(this.currentPlayer.currentWord);
   }
 
-  // debugger;
+  debugger;
 
   if (this.checkValidWord()) {
-    console.log("reached checkValidWord");
+    console.log(this.currentPlayer.getTurnScore());
+    this.updatePlayerScore(this.currentPlayer.getTurnScore());
+    console.log("current player score", this.currentPlayer.score);
+
+
+  } else {
+    this.backTilesToRackFromBoard();
+    console.log(this.currentPlayer.partialWord);
   }
+};
 
-  // console.log(this.currentPlayer.countScore());
-  return this.currentPlayer.countScore();
 
+Game.prototype.backTilesToRackFromBoard = function () {
+  for (var i = 0; i < this.currentPlayer.partialWord.length; i++) {
+    var x = this.currentPlayer.partialWord[i].x;
+    var y = this.currentPlayer.partialWord[i].y;
+    this.currentPlayer.rack.unshift(this.currentPlayer.partialWord[i].tile);
+    this.board[y][x].tile = {};
+  }
 };
 
 Game.prototype.switchPlayer = function () {
   if (this.currentPlayer.name === this.players[0].name) {
     this.currentPlayer = this.players[1];
+    console.log(this.currentPlayer);
   } else {
     this.currentPlayer = this.players[0];
+    console.log(this.currentPlayer);
   }
 };
 
@@ -100,11 +145,11 @@ Game.prototype.generateBoard = function () {
 Game.prototype.completeHorizontalWord = function (partialWord) {
   // debugger;
   var completeWord = [];
+  partialWord = sortPartialWord(partialWord, true)
   var horizontal = this.board[partialWord[0].y];// take whole horizontal array from board with y coord
   var firstX = partialWord[0].x;
   var lastX = partialWord[partialWord.length-1].x;
-  // TODO: sort (cells) partialWord array
-  // because a user might not drop in a straightforward order
+
   for (var i = partialWord[0].x; i <= partialWord[partialWord.length-1].x; i++) {
     if (typeof horizontal[i].tile !== 'undefined') {
       completeWord.push(horizontal[i]);
@@ -112,7 +157,6 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
       return false;
     }
   }
-  // debugger;
   // Check the beginning of horiz array to see if empty
   // also check if we're at the edge of the board
   while ((firstX-1)>=0 && (typeof horizontal[firstX-1].tile.id !== 'undefined')) {
@@ -120,7 +164,6 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
     firstX--;
   }
   // Check the end of horiz array to see if empty
-
   while ((lastX+1<=14)&& (typeof horizontal[lastX+1].tile.id !== 'undefined')) {
     completeWord.push(horizontal[lastX+1]);
     lastX++;
@@ -129,14 +172,11 @@ Game.prototype.completeHorizontalWord = function (partialWord) {
 };
 
 Game.prototype.completeVerticalWord = function (partialWord) {
-  // debugger;
   var completeWord = [];
+  partialWord = sortPartialWord(partialWord, false);
   var xCoord = partialWord[0].x;
   var firstY = partialWord[0].y;
   var lastY = partialWord[partialWord.length-1].y;
-
-  // TODO: sort (cells) partialWord array
-  // because a user might not drop in a straightforward order
 
   for (var i = firstY; i <= lastY; i++) {
     if (typeof this.board[i][xCoord].tile !== 'undefined') {
@@ -171,8 +211,8 @@ Player.prototype.removeTilefromRack = function (cell) {
   }
 };
 
-Player.prototype.playerScore = function (wordScore) {
-  return this.score += wordScore;
+Game.prototype.updatePlayerScore = function (wordScore) {
+  this.currentPlayer.score += wordScore;
 };
 
 Player.prototype.refillRack = function (initialBag) {
@@ -215,23 +255,20 @@ Game.prototype.checkHorizontalPosition = function () {
 
 Game.prototype.checkValidWord = function () {
   var wordString ="";
-debugger;
   for (var i = 0; i < this.currentPlayer.currentWord.length; i++) {
     wordString+=this.currentPlayer.currentWord[i].tile.letter;
-    // console.log("this.currentPlayer.currentWord[i].tile.letter = ",  this.currentPlayer.currentWord[i].tile.letter);
   }
-  // console.log(wordString);
   wordString = wordString.toLowerCase();
   console.log(dictionary.includes(wordString));
 
   return dictionary.includes(wordString);
 };
 
-Player.prototype.countScore = function() {
-  // debugger;
+Player.prototype.getTurnScore = function() {
+
   var wordScoreMultiplier = 1;
   var currentWordScore = 0;
-
+  debugger;
   for (var i = 0; i <= this.currentWord.length-1; i++) {
     if (typeof this.currentWord[i].pointMultiplier === 'undefined') {
       currentWordScore += parseInt(this.currentWord[i].tile.letterValue);
@@ -252,10 +289,12 @@ Player.prototype.countScore = function() {
 
 Game.prototype.startNewGame = function () {
   this.generateBoard();
-  var playerOne = new Player ("Tom");
-  var playerOne = new Player ("Jarry");
-  this.currentPlayer = playerOne;
+  this.players.push(new Player ("Tom"));
+  this.players.push(new Player ("Jerry"));
+
+  this.currentPlayer = this.players[0];
 };
+
 Game.prototype.checkEndGame = function () {
   var emptyRack;
   for (var i = 0; i < this.players.length; i++) {
@@ -352,6 +391,14 @@ $(document).ready(function(){
     dragger.offset({ top: topMove + offset.top, left: leftMove + offset.left });
   };
 
+
+////////////CLICKABLE BAG
+$("#refill").click(function () {
+  scrabbleGame.currentPlayer.refillRack(initialBag);
+  console.log(scrabbleGame.currentPlayer.rack);
+  scrabbleGame.switchPlayer();
+});
+
 //PLAYER BUTTON INPUT
   $("button#score").click(function(){
     // console.log("SCORE!");
@@ -368,6 +415,7 @@ $(document).ready(function(){
   $("button#pass").click(function(){
     var turnType = "pass";
     console.log("PASS");
+
   });
 
   // $(".refill").click(function () {
